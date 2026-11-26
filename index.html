@@ -393,6 +393,14 @@
     max-height:56vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
   }
   .pinfo.show{transform:translateY(0);visibility:visible}
+  @media (min-width: 560px){
+    .pinfo{
+      left:50%;right:auto;width:100%;max-width:520px;
+      transform:translate(-50%, calc(100% + 16px));
+      border-radius:20px 20px 0 0;
+    }
+    .pinfo.show{transform:translate(-50%, 0)}
+  }
   .pi-grab{width:36px;height:4px;border-radius:99px;background:#E7DCCE;margin:0 auto 10px}
   .pi-head{display:flex;align-items:flex-start;gap:9px}
   .pi-num{
