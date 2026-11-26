@@ -1,0 +1,16 @@
+{
+  "name": "오사카 · 교토 여행",
+  "short_name": "오사카·교토",
+  "description": "2026.12.13 – 12.17 오사카·교토 4박 5일 여행 일정",
+  "lang": "ko",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#FBF6EF",
+  "theme_color": "#FBF6EF",
+  "icons": [
+    { "src": "icon-180.png", "sizes": "180x180", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

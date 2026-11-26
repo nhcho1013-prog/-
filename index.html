@@ -1,0 +1,1039 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>오사카 · 교토 여행</title>
+<meta name="description" content="2026.12.13 – 12.17 오사카·교토 4박 5일 여행 일정">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FBF6EF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="오사카·교토">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-180.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232C3654'/%3E%3Ccircle cx='32' cy='26' r='13' fill='%23E05B45'/%3E%3Cpath d='M13 24h38v5H13z' fill='%23FBF6EF'/%3E%3Cpath d='M22 29h5v22h-5zM37 29h5v22h-5z' fill='%23FBF6EF'/%3E%3Cpath d='M17 36h30v4H17z' fill='%23FBF6EF'/%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  :root{
+    --bg:#FBF6EF;
+    --card:#FFFFFF;
+    --ink:#1E2430;
+    --sub:#847F78;
+    --line:#EEE3D6;
+    --accent:#E05B45;
+    --accent-soft:#FDECE7;
+    --indigo:#2C3654;
+    --indigo-soft:#EDEFF6;
+    --mint:#3E7C6B;
+    --mint-soft:#E8F2EE;
+    --amber:#B4762A;
+    --amber-soft:#FBF0DE;
+    --gray-soft:#F1EDE7;
+    --r:18px;
+    --shadow:0 1px 2px rgba(56,40,24,.04), 0 8px 24px rgba(56,40,24,.05);
+    --tab-h:60px;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(120% 60% at 100% 0%, #FDEFE6 0%, rgba(253,239,230,0) 55%),
+      radial-gradient(100% 50% at 0% 100%, #EEF1F8 0%, rgba(238,241,248,0) 60%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    font-size:15px;
+    line-height:1.45;
+    -webkit-font-smoothing:antialiased;
+    letter-spacing:-0.01em;
+  }
+  h1,h2,h3,h4,p{margin:0}
+  button{font:inherit;color:inherit;border:0;background:none;padding:0;cursor:pointer}
+  a{color:inherit;text-decoration:none}
+  .hidden{display:none !important}
+
+  /* ── app header ── */
+  .appbar{
+    position:sticky;top:0;z-index:40;
+    padding:calc(env(safe-area-inset-top, 0px) + 12px) 18px 12px;
+    background:linear-gradient(180deg, rgba(251,246,239,.97) 60%, rgba(251,246,239,.86) 100%);
+    backdrop-filter:saturate(160%) blur(14px);
+    -webkit-backdrop-filter:saturate(160%) blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .bar-top{display:flex;align-items:flex-start;gap:10px}
+  .brand{flex:1;min-width:0}
+  .brand h1{font-size:19px;font-weight:800;letter-spacing:-0.03em}
+  .brand .sub{margin-top:2px;font-size:12.5px;color:var(--sub);font-weight:600;letter-spacing:0}
+  .bar-right{display:flex;align-items:center;gap:8px;padding-top:1px}
+  .dday{
+    display:inline-flex;align-items:center;
+    height:26px;padding:0 10px;border-radius:999px;
+    background:var(--accent);color:#fff;
+    font-size:12px;font-weight:800;letter-spacing:0.01em;
+    box-shadow:0 4px 10px rgba(224,91,69,.28);
+    white-space:nowrap;
+  }
+  .dday.ongoing{background:var(--indigo);box-shadow:0 4px 10px rgba(44,54,84,.25)}
+  .icon-btn{
+    width:32px;height:32px;border-radius:50%;
+    display:grid;place-items:center;
+    background:#fff;border:1px solid var(--line);color:#5B564F;
+  }
+  .icon-btn svg{width:18px;height:18px}
+  .progress{display:flex;align-items:center;gap:10px;margin-top:11px}
+  .progress-track{flex:1;height:5px;border-radius:999px;background:#EFE6DA;overflow:hidden}
+  .progress-fill{height:100%;width:0%;border-radius:999px;background:linear-gradient(90deg,#E9A08E,#E05B45);transition:width .35s ease}
+  .progress-text{font-size:11.5px;font-weight:700;color:var(--sub);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  main{padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom, 0px) + 26px)}
+
+  /* ── day pills ── */
+  .daybar{
+    display:flex;gap:6px;
+    overflow-x:auto;scrollbar-width:none;
+    padding:14px 14px 4px;
+    -webkit-overflow-scrolling:touch;
+  }
+  .daybar::-webkit-scrollbar{display:none}
+  .pill{
+    flex:1 1 0;min-width:0;
+    display:flex;flex-direction:column;align-items:center;gap:1px;
+    padding:8px 3px 7px;border-radius:13px;
+    background:rgba(255,255,255,.72);border:1px solid var(--line);
+    color:#6B665F;
+    transition:transform .12s ease, background .18s ease, color .18s ease;
+  }
+  .pill:active{transform:scale(.96)}
+  .pill b{font-size:12.5px;font-weight:800;letter-spacing:-0.03em;white-space:nowrap}
+  .pill span{font-size:9.5px;font-weight:700;color:var(--sub);white-space:nowrap;font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+  .pill.on{background:var(--indigo);border-color:var(--indigo);color:#fff;box-shadow:0 6px 16px rgba(44,54,84,.22)}
+  .pill.on span{color:rgba(255,255,255,.72)}
+  .pill.all-done::after{content:"✓";font-size:9px;color:var(--mint);margin-top:-2px}
+  .pill.on.all-done::after{color:#9FE0CB}
+
+  .dayhead{padding:14px 18px 4px}
+  .dayhead .row{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .dayhead h2{font-size:20px;font-weight:800;letter-spacing:-0.03em}
+  .dayhead h2 em{font-style:normal;color:var(--accent);font-size:13px;font-weight:800;margin-left:6px;vertical-align:2px}
+  .dayhead .tagline{font-size:12.5px;color:var(--sub);font-weight:600;margin-top:3px}
+  .dayhead .count{font-size:12px;font-weight:700;color:var(--sub);white-space:nowrap}
+
+  /* ── timeline ── */
+  .list{padding:8px 14px 0;display:flex;flex-direction:column;gap:9px}
+  .item{
+    position:relative;
+    display:grid;grid-template-columns:34px 1fr 26px;
+    gap:10px;align-items:start;
+    padding:13px 12px 12px 12px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--r);
+    box-shadow:var(--shadow);
+    transition:transform .12s ease, opacity .2s ease;
+  }
+  .item:active{transform:scale(.994)}
+  .check{
+    width:26px;height:26px;margin-top:1px;
+    border-radius:50%;border:1.8px solid #DCD2C5;background:#fff;
+    display:grid;place-items:center;color:transparent;
+    transition:all .16s ease;
+  }
+  .check svg{width:14px;height:14px}
+  .item.done .check{background:var(--mint);border-color:var(--mint);color:#fff}
+  .item.done .title{color:#9C968E;text-decoration:line-through;text-decoration-thickness:1px}
+  .item.done{background:#FCFAF6}
+  .body{min-width:0}
+  .meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:4px}
+  .time{font-size:12px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums}
+  .tag{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:-0.01em}
+  .tag.food{background:var(--accent-soft);color:#C0462F}
+  .tag.stay{background:var(--indigo-soft);color:#39456A}
+  .tag.spot{background:var(--mint-soft);color:#2F6A5A}
+  .tag.shop{background:var(--amber-soft);color:#96601B}
+  .tag.move{background:var(--gray-soft);color:#6C665E}
+  .title{font-size:15.5px;font-weight:750;letter-spacing:-0.025em;line-height:1.32}
+  .place{margin-top:3px;font-size:12.5px;color:#5F5A53;font-weight:600}
+  .note{margin-top:5px;font-size:12px;color:#8B857C;line-height:1.42}
+  .mapbtn{
+    display:inline-flex;align-items:center;gap:5px;
+    margin-top:9px;padding:6px 11px 6px 9px;border-radius:999px;
+    background:#F3F5FA;border:1px solid #E3E7F1;color:#39456A;
+    font-size:11.5px;font-weight:800;
+  }
+  .mapbtn:active{background:#E8ECF6}
+  .mapbtn svg{width:13px;height:13px}
+  .more{
+    width:26px;height:26px;border-radius:8px;color:#B4AEA5;
+    display:grid;place-items:center;font-size:16px;line-height:1;letter-spacing:1px;
+  }
+  .more:active{background:#F4F0EA}
+
+  .addbtn{
+    display:flex;align-items:center;justify-content:center;gap:7px;
+    width:calc(100% - 28px);margin:12px 14px 0;
+    padding:13px;border-radius:15px;
+    border:1.5px dashed #DFD3C3;background:rgba(255,255,255,.5);
+    color:#8A8379;font-size:13.5px;font-weight:800;
+  }
+  .addbtn:active{background:#fff}
+  .hint{padding:14px 22px 8px;font-size:11.5px;color:#A39C92;text-align:center;line-height:1.5}
+
+  /* ── places ── */
+  .section{padding:18px 16px 0}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;padding:0 2px 9px}
+  .section-head h2{font-size:16px;font-weight:800;letter-spacing:-0.025em}
+  .section-head span{font-size:11.5px;font-weight:700;color:var(--sub)}
+  .pcard{
+    display:block;
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:13px 13px 12px;margin-bottom:9px;
+    transition:transform .12s ease, background .16s ease;
+  }
+  .pcard:active{transform:scale(.994);background:#FDFAF6}
+  .pcard .top{display:flex;align-items:flex-start;gap:9px}
+  .pcard .dot{width:8px;height:8px;border-radius:50%;margin-top:7px;flex:0 0 auto}
+  .pcard h3{font-size:15px;font-weight:800;letter-spacing:-0.025em;flex:1;min-width:0}
+  .pcard .ja{font-size:12px;color:#6F6A63;font-weight:600;margin-top:2px}
+  .pcard .area{font-size:11.5px;color:#9A938A;margin-top:1px}
+  .pcard .pnote{font-size:11.5px;color:#8B857C;margin-top:7px;padding-top:7px;border-top:1px dashed #EFE6DA;line-height:1.45}
+
+  /* ── checklist ── */
+  .cl-group{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden}
+  .cl-group h3{font-size:12px;font-weight:800;color:var(--sub);letter-spacing:0.02em;padding:13px 14px 7px}
+  .cl-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-top:1px solid #F6F0E8}
+  .cl-item:first-of-type{border-top:0}
+  .cl-item .check{width:23px;height:23px}
+  .cl-item .check svg{width:12px;height:12px}
+  .cl-item.done .check{background:var(--mint);border-color:var(--mint);color:#fff}
+  .cl-item.done .cl-text{color:#A8A29A;text-decoration:line-through}
+  .cl-text{flex:1;font-size:14px;font-weight:650;letter-spacing:-0.02em;line-height:1.35}
+  .del{width:26px;height:26px;border-radius:8px;color:#C9C1B7;display:grid;place-items:center;font-size:15px}
+  .del:active{background:#F5F1EB;color:#A85A48}
+  .cl-add{display:flex;gap:8px;padding:10px 12px;border-top:1px solid #F6F0E8;background:#FDFBF7}
+  .cl-add input{flex:1;min-width:0;border:1px solid #E9DFD2;background:#fff;border-radius:10px;padding:9px 11px;font-size:13px;font-family:inherit;color:var(--ink)}
+  .cl-add input:focus{outline:none;border-color:#D9B7A8}
+  .cl-add button{width:38px;border-radius:10px;background:var(--indigo);color:#fff;font-size:18px;font-weight:700;display:grid;place-items:center}
+
+  /* ── money / memo ── */
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:14px;margin-bottom:12px}
+  .panel h3{font-size:13.5px;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+  .panel h3 span{font-size:11px;font-weight:700;color:var(--sub)}
+  .totals{display:flex;gap:8px;margin-bottom:12px}
+  .total-box{flex:1;background:#FCF8F1;border:1px solid #F0E6D8;border-radius:13px;padding:10px 11px}
+  .total-box small{font-size:10.5px;font-weight:800;color:var(--sub);letter-spacing:0.02em}
+  .total-box b{display:block;font-size:17px;font-weight:800;letter-spacing:-0.03em;margin-top:2px;font-variant-numeric:tabular-nums}
+  .exp-form{display:grid;grid-template-columns:1fr 88px;gap:7px}
+  .exp-form input,.exp-form select,.memo{
+    width:100%;border:1px solid #E9DFD2;background:#fff;border-radius:11px;
+    padding:10px 11px;font-size:14px;font-family:inherit;color:var(--ink);
+  }
+  .exp-form input:focus,.exp-form select:focus,.memo:focus{outline:none;border-color:#D9B7A8}
+  .exp-form .wide{grid-column:1 / -1}
+  .exp-form select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,#A79F94 50%),linear-gradient(135deg,#A79F94 50%,transparent 50%);background-position:calc(100% - 15px) 18px,calc(100% - 10px) 18px;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:26px}
+  .primary{
+    background:var(--accent);color:#fff;border-radius:12px;
+    padding:11px 16px;font-size:14px;font-weight:800;
+    box-shadow:0 6px 16px rgba(224,91,69,.25);
+  }
+  .primary:active{transform:translateY(1px)}
+  .exp-add{grid-column:1 / -1}
+  .exp-list{margin-top:12px;display:flex;flex-direction:column}
+  .exp-row{display:flex;align-items:center;gap:10px;padding:9px 2px;border-top:1px solid #F5EFE7}
+  .exp-row .cat{font-size:10.5px;font-weight:800;color:#8A8379;background:var(--gray-soft);padding:2px 7px;border-radius:6px;flex:0 0 auto}
+  .exp-row .txt{flex:1;min-width:0;font-size:13.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .exp-row .amt{font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+  .empty{font-size:12.5px;color:#A9A29A;text-align:center;padding:14px 0 6px}
+  .memo{min-height:120px;resize:vertical;line-height:1.55;font-size:13.5px}
+  .saved{font-size:11px;font-weight:700;color:var(--mint)}
+
+  /* ── tab bar ── */
+  .tabbar{
+    position:fixed;left:0;right:0;bottom:0;z-index:45;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    padding-bottom:env(safe-area-inset-bottom, 0px);
+    background:rgba(255,253,250,.94);
+    backdrop-filter:saturate(180%) blur(18px);
+    -webkit-backdrop-filter:saturate(180%) blur(18px);
+    border-top:1px solid var(--line);
+  }
+  .tab{
+    height:var(--tab-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+    color:#A49D93;font-size:10.5px;font-weight:800;letter-spacing:-0.02em;
+    transition:color .15s ease;
+  }
+  .tab svg{width:22px;height:22px}
+  .tab.on{color:var(--accent)}
+  .tab.on svg{stroke-width:2}
+
+  /* ── sheet ── */
+  .backdrop{
+    position:fixed;inset:0;z-index:60;
+    background:rgba(30,26,22,.34);
+    backdrop-filter:blur(2px);
+    opacity:0;transition:opacity .22s ease;
+  }
+  .backdrop.show{opacity:1}
+  .sheet{
+    position:fixed;left:0;right:0;bottom:0;z-index:61;
+    background:#FFFDF9;
+    border-radius:22px 22px 0 0;
+    padding:10px 18px calc(18px + env(safe-area-inset-bottom, 0px));
+    box-shadow:0 -12px 40px rgba(50,38,24,.16);
+    transform:translateY(102%);
+    transition:transform .26s cubic-bezier(.32,.72,0,1);
+    max-height:88vh;overflow-y:auto;
+  }
+  .sheet.show{transform:translateY(0)}
+  .handle{width:38px;height:4px;border-radius:99px;background:#E4D9CB;margin:0 auto 12px}
+  .sheet h2{font-size:17px;font-weight:800;letter-spacing:-0.03em;margin-bottom:12px}
+  .field{margin-bottom:10px}
+  .field label{display:block;font-size:11.5px;font-weight:800;color:var(--sub);margin-bottom:5px;letter-spacing:0.01em}
+  .field input,.field textarea,.field select{
+    width:100%;border:1px solid #E9DFD2;background:#fff;border-radius:12px;
+    padding:11px 12px;font-size:15px;font-family:inherit;color:var(--ink);
+  }
+  .field textarea{min-height:64px;resize:vertical;line-height:1.5}
+  .field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:#D9B7A8}
+  .two{display:grid;grid-template-columns:104px 1fr;gap:8px}
+  .sheet-actions{display:flex;gap:8px;margin-top:14px}
+  .sheet-actions .danger{
+    flex:0 0 auto;padding:12px 16px;border-radius:12px;
+    background:#FBEDE9;color:#C0462F;font-size:14px;font-weight:800;
+  }
+  .sheet-actions .grow{flex:1}
+  .menu-list{display:flex;flex-direction:column;gap:8px}
+  .menu-list button{
+    text-align:left;padding:14px;border-radius:14px;background:#fff;border:1px solid var(--line);
+    font-size:14.5px;font-weight:700;display:flex;justify-content:space-between;align-items:center;gap:10px;
+  }
+  .menu-list button small{display:block;font-size:11.5px;color:var(--sub);font-weight:600;margin-top:2px}
+  .menu-list button.warn{color:#C0462F}
+  .menu-list button.warn small{color:#C88C7F}
+
+  .toast{
+    position:fixed;left:50%;bottom:calc(var(--tab-h) + env(safe-area-inset-bottom, 0px) + 18px);
+    transform:translate(-50%, 12px);z-index:80;
+    background:rgba(35,30,26,.9);color:#fff;
+    padding:9px 16px;border-radius:999px;font-size:12.5px;font-weight:700;
+    opacity:0;transition:all .2s ease;pointer-events:none;white-space:nowrap;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+
+<header class="appbar">
+  <div class="bar-top">
+    <div class="brand">
+      <h1>오사카 · 교토 여행</h1>
+      <p class="sub">2026.12.13 – 12.17 · 4박 5일</p>
+    </div>
+    <div class="bar-right">
+      <span class="dday" id="dday">D-17</span>
+      <button class="icon-btn" id="btnSettings" aria-label="설정">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">
+          <path d="M4 7h9M18.5 7H21M4 17h3M12.5 17H21"/>
+          <circle cx="15.5" cy="7" r="2.2"/><circle cx="9.7" cy="17" r="2.2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="progress">
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <span class="progress-text" id="progressText">0 / 0</span>
+  </div>
+</header>
+
+<main>
+  <section id="view-timeline">
+    <div class="daybar" id="daybar"></div>
+    <div class="dayhead" id="dayhead"></div>
+    <div class="list" id="timelineList"></div>
+    <button class="addbtn" id="addItem">＋ 이 날 일정 추가</button>
+    <p class="hint">시간은 참고용 추천이에요. 카드를 누르면 시간·메모를 고칠 수 있어요.</p>
+  </section>
+
+  <section id="view-places" class="hidden">
+    <div id="placesWrap"></div>
+    <p class="hint">장소를 누르면 구글 지도에서 바로 검색돼요.</p>
+  </section>
+
+  <section id="view-check" class="hidden">
+    <div class="section" style="padding-bottom:0">
+      <div class="section-head">
+        <h2>체크리스트</h2>
+        <span id="checkCount">0 / 0</span>
+      </div>
+    </div>
+    <div style="padding:0 16px" id="checkWrap"></div>
+    <p class="hint">출발 전에 하나씩 체크해 두면 마음이 편해요.</p>
+  </section>
+
+  <section id="view-money" class="hidden">
+    <div class="section" style="padding-bottom:0">
+      <div class="section-head"><h2>여행 메모</h2></div>
+    </div>
+    <div style="padding:0 16px">
+      <div class="panel">
+        <h3>메모 <span class="saved" id="memoSaved"></span></h3>
+        <textarea class="memo" id="memoBox" placeholder="예약 번호, 와이파이 비번, 사고 싶은 것, 하고 싶은 말…"></textarea>
+      </div>
+    </div>
+    <div class="section" style="padding-bottom:0">
+      <div class="section-head"><h2>경비 기록</h2><span id="expCount"></span></div>
+    </div>
+    <div style="padding:0 16px">
+      <div class="panel">
+        <div class="totals">
+          <div class="total-box"><small>엔화 합계</small><b id="totalJpy">¥0</b></div>
+          <div class="total-box"><small>원화 합계</small><b id="totalKrw">0원</b></div>
+        </div>
+        <div class="exp-form">
+          <input id="expAmount" type="number" inputmode="decimal" placeholder="금액" min="0" step="any">
+          <select id="expCur">
+            <option value="JPY">¥ 엔</option>
+            <option value="KRW">원 KRW</option>
+          </select>
+          <select id="expCat" class="wide">
+            <option value="식비">식비</option>
+            <option value="교통">교통</option>
+            <option value="쇼핑">쇼핑</option>
+            <option value="관광">관광</option>
+            <option value="기타">기타</option>
+          </select>
+          <input id="expMemo" class="wide" placeholder="무엇에 썼는지 (예: 이치란 라멘)">
+          <button class="primary exp-add" id="expAdd">기록 추가</button>
+        </div>
+        <div class="exp-list" id="expList"></div>
+      </div>
+    </div>
+    <p class="hint">기록은 이 기기에만 저장돼요.</p>
+  </section>
+</main>
+
+<nav class="tabbar">
+  <button class="tab on" data-tab="timeline">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3.5" y="5" width="17" height="15.5" rx="3.2"/><path d="M8 3.4v3.2M16 3.4v3.2M3.5 10h17"/>
+    </svg>
+    <span>일정</span>
+  </button>
+  <button class="tab" data-tab="places">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 21s6.4-6.3 6.4-11A6.4 6.4 0 0 0 5.6 10c0 4.7 6.4 11 6.4 11z"/><circle cx="12" cy="9.9" r="2.3"/>
+    </svg>
+    <span>장소</span>
+  </button>
+  <button class="tab" data-tab="check">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.4"/><path d="M8 12.2l2.6 2.6 5.4-5.8"/>
+    </svg>
+    <span>체크</span>
+  </button>
+  <button class="tab" data-tab="money">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="6.4" width="18" height="12.8" rx="3.4"/><path d="M3 10.6h18M16.4 15h1.8"/>
+    </svg>
+    <span>메모·경비</span>
+  </button>
+</nav>
+
+<div class="backdrop hidden" id="backdrop"></div>
+<div class="sheet" id="sheet" aria-hidden="true"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  const STORE_KEY = "oktrip.v1";
+  const TRIP_START = new Date(2026, 11, 13); // 2026-12-13
+  const TRIP_END   = new Date(2026, 11, 17); // 2026-12-17
+
+  const DAYS = [
+    {id:"d1", n:1, date:"12.13", wd:"일", tagline:"오사카 도착 → 교토"},
+    {id:"d2", n:2, date:"12.14", wd:"월", tagline:"교토 → 오사카 · 도톤보리"},
+    {id:"d3", n:3, date:"12.15", wd:"화", tagline:"덴노지 · 하루카스 야경"},
+    {id:"d4", n:4, date:"12.16", wd:"수", tagline:"오사카성 · 우메다"},
+    {id:"d5", n:5, date:"12.17", wd:"목", tagline:"여행 마무리 · 귀국"}
+  ];
+
+  const TYPES = {food:"식당", stay:"숙소", spot:"명소", shop:"쇼핑", move:"이동"};
+
+  const DEFAULT_ITEMS = [
+    // ── 1일차 ──
+    {day:"d1", time:"10:00", type:"move", title:"오사카역 도착 · 짐 맡기기", place:"大阪駅 (JR 오사카역)", note:"코인락커나 역내 보관소에 캐리어 먼저 맡기기", map:"大阪駅"},
+    {day:"d1", time:"11:30", type:"food", title:"점심 라멘 · 무기토 멘스케", place:"麦と麺助 · 나카쓰", note:"미슐랭 빕구르망, 12석뿐이라 웨이팅 필수 · 일요일 11:00~16:00", map:"麦と麺助 大阪"},
+    {day:"d1", time:"14:00", type:"stay", title:"교토 이동 · 숙소 체크인", place:"鈴 花屋町 朝霧", note:"JR 오사카→교토 약 30분 · 단바구치역 도보 15분 · 체크인 16:00(짐 먼저 맡기기)", map:"鈴 花屋町 朝霧 京都"},
+    {day:"d1", time:"16:30", type:"shop", title:"니시키시장 구경", place:"錦市場", note:"400m 골목 시장 · 대부분 18시 전후 문 닫아요", map:"錦市場 京都"},
+    {day:"d1", time:"18:00", type:"spot", title:"카모강 산책", place:"鴨川 (산조~시조)", note:"해 질 무렵 강변 산책 · 추우면 카페에서 쉬어가기", map:"鴨川 三条大橋 京都"},
+    {day:"d1", time:"19:00", type:"food", title:"저녁 장어덮밥 · 쿄우 우나와", place:"京うな和 本店 四条堺町", note:"우나重 4,400엔~ / 히츠마부시 5,610엔 · 연중무휴 11:00~20:30", map:"京うな和 本店 四条堺町"},
+    {day:"d1", time:"21:00", type:"stay", title:"숙소 복귀", place:"鈴 花屋町 朝霧", note:"", map:"鈴 花屋町 朝霧 京都"},
+
+    // ── 2일차 ──
+    {day:"d2", time:"09:30", type:"stay", title:"숙소 체크아웃", place:"鈴 花屋町 朝霧", note:"체크아웃 10:00 · 짐은 프런트에 맡기고 가볍게 출발", map:"鈴 花屋町 朝霧 京都"},
+    {day:"d2", time:"10:00", type:"spot", title:"기온거리 · 야사카신사", place:"祇園 · 八坂神社", note:"니넨자카·산넨자카 골목까지 천천히 걸어보기", map:"八坂神社 京都"},
+    {day:"d2", time:"12:00", type:"food", title:"점심 밥집 · 하치다이메 기헤에", place:"八代目儀兵衛 祇園", note:"솥밥 리필 무제한 · 점심 11:00~14:30 (월요일 8:00~15:00)", map:"八代目儀兵衛 祇園"},
+    {day:"d2", time:"14:00", type:"stay", title:"오사카 이동 · 짐 찾고 숙소 체크인", place:"아파트먼트호텔 (니혼바시)", note:"교토→오사카 약 40분 · 짐 회수 후 체크인. 예약한 호텔 주소는 장소 탭에 적어두세요", map:"アパートメントホテル 日本橋 大阪"},
+    {day:"d2", time:"16:30", type:"spot", title:"도톤보리 리버크루즈", place:"道頓堀リバークルーズ", note:"약 20분 코스 · 성인 1,500엔 · 돈돈야 앞 승선장", map:"道頓堀リバークルーズ"},
+    {day:"d2", time:"17:30", type:"shop", title:"구로몬시장 구경", place:"黒門市場", note:"니혼바시역 10번 출구 · 18시 전후 마감이라 간식은 서둘러", map:"黒門市場 大阪"},
+    {day:"d2", time:"19:00", type:"food", title:"저녁 야키토리", place:"난바 야키토리 (현장 선택)", note:"줄 서는 집이 많아요. 후보 2곳 찜해두고 가기", map:"やきとり 難波 大阪"},
+    {day:"d2", time:"20:30", type:"shop", title:"신사이바시 상점가 구경", place:"心斎橋筋商店街", note:"약 600m 아케이드 · 드럭스토어 쇼핑하기 좋아요", map:"心斎橋筋商店街"},
+    {day:"d2", time:"21:30", type:"spot", title:"난바까지 걸으며 일루미네이션", place:"御堂筋 イルミネーション", note:"미도스지 가로수 조명 · 신사이바시→난바 도보 15분", map:"御堂筋 イルミネーション 大阪"},
+    {day:"d2", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 (니혼바시)", note:"", map:"アパートメントホテル 日本橋 大阪"},
+
+    // ── 3일차 ──
+    {day:"d3", time:"11:00", type:"food", title:"점심 카레 · 하시모토야", place:"橋本屋 (南船場)", note:"11:30~14:00 영업 · 정리권 받고 지정 시간에 입장 · 일요일 휴무", map:"橋本屋 南船場 大阪"},
+    {day:"d3", time:"13:00", type:"spot", title:"덴노지 이동 · 구경", place:"天王寺 · 新世界", note:"쓰텐카쿠와 신세카이 골목 산책", map:"天王寺 大阪"},
+    {day:"d3", time:"16:30", type:"spot", title:"하루카스 300 야경", place:"あべのハルカス300", note:"16F 전망대 · 해 지기 30분 전에 올라가면 노을+야경을 같이", map:"あべのハルカス300"},
+    {day:"d3", time:"18:30", type:"spot", title:"덴노지공원 크리스마스마켓", place:"天王寺公園 (てんしば)", note:"12월 한정 마켓 · 따뜻한 음료 한 잔", map:"天王寺公園 クリスマスマーケット"},
+    {day:"d3", time:"20:00", type:"food", title:"저녁 오마카세 · 스시히로", place:"鮨ひろ 本店", note:"동물원앞역 도보 3분 · 수요일 휴무 · 오마카세 10관 3,630엔~", map:"鮨ひろ 本店 大阪"},
+    {day:"d3", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 (니혼바시)", note:"", map:"アパートメントホテル 日本橋 大阪"},
+
+    // ── 4일차 ──
+    {day:"d4", time:"10:00", type:"spot", title:"오사카성 구경", place:"大阪城公園 · 天守閣", note:"천수각 9:00~17:00 · 입장 600엔 · 성벽 산책로도 좋아요", map:"大阪城 天守閣"},
+    {day:"d4", time:"12:30", type:"food", title:"점심 돈카츠 · 돈카츠 아몬", place:"豚かつ あもん (京橋)", note:"오사카성에서 도보 15분 · 화요일 휴무 · 로스카츠 1,800엔", map:"豚かつ あもん 京橋"},
+    {day:"d4", time:"14:30", type:"move", title:"우메다 이동 · 구경", place:"梅田", note:"백화점·상점가 · 시간 남으면 루쿠아 전망", map:"梅田 大阪"},
+    {day:"d4", time:"18:00", type:"food", title:"저녁 야키니쿠 · 고리쨩", place:"焼肉ごりちゃん 梅田本店", note:"17:00~새벽 영업 · 20세 미만 입장 불가 · 예약 추천", map:"焼肉ごりちゃん 梅田本店"},
+    {day:"d4", time:"20:30", type:"spot", title:"일루미네이션 구경", place:"大阪光のルネサンス (나카노시마)", note:"우메다에서 도보권 · 12월 개최", map:"大阪光のルネサンス 中之島"},
+    {day:"d4", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 (니혼바시)", note:"", map:"アパートメントホテル 日本橋 大阪"},
+
+    // ── 5일차 ──
+    {day:"d5", time:"10:00", type:"stay", title:"숙소 체크아웃", place:"아파트먼트호텔 (니혼바시)", note:"체크아웃 10:00 · 짐은 프런트에 보관하고 점심", map:"アパートメントホテル 日本橋 大阪"},
+    {day:"d5", time:"11:30", type:"food", title:"점심 돈카츠 에페", place:"epais (北新地)", note:"11:00~15:00 · 브랜드돈 런치 1,100엔~ · 일·공휴일 휴무", map:"epais 北新地 とんかつ"},
+    {day:"d5", time:"13:30", type:"move", title:"간사이공항 이동", place:"関西国際空港", note:"난카이 라피트 약 38분 · 출발 2시간 전 도착 권장", map:"関西国際空港"}
+  ];
+
+  const PLACES = [
+    {g:"stay", ko:"교토 숙소 · 린 하나야초 아사기리", ja:"鈴 花屋町 朝霧", area:"쿄토 시모교구 후타리시초 6-4 · JR 단바구치역 도보 15분", note:"1·2일차 1박 (12.13~14) · 체크인 16:00 / 체크아웃 10:00", map:"鈴 花屋町 朝霧 京都"},
+    {g:"stay", ko:"오사카 숙소 · 아파트먼트호텔", ja:"日本橋 アパートメントホテル", area:"오사카 나니와구 니혼바시 4-8-10 일대 · 니혼바시역 도보 5분", note:"2~4일차 3박 (12.14~17) · 울트라위스키/울트라마켓 건물 근처. 예약한 호텔 이름·주소를 지도 검색어에 넣어두세요", map:"アパートメントホテル 日本橋 大阪"},
+
+    {g:"eat", ko:"무기토 멘스케 (라멘)", ja:"麦と麺助", area:"오사카 기타구 도요사키 3-4-12 · 나카쓰역 도보 3분", note:"1일차 점심 · 화요일 휴무 · 일요일 11:00~16:00", map:"麦と麺助 大阪"},
+    {g:"eat", ko:"쿄우 우나와 본점 (장어)", ja:"京うな和 本店 四条堺町", area:"쿄토 나카교구 사카이마치도리 시조 上ル 八百屋町 553-2", note:"1일차 저녁 · 니시키시장에서 도보 3분 · 11:00~20:30", map:"京うな和 本店 四条堺町"},
+    {g:"eat", ko:"하치다이메 기헤에 (쌀밥 정식)", ja:"八代目儀兵衛 祇園", area:"쿄토 히가시야마구 기온마치키타가와 296 · 야사카신사 앞", note:"2일차 점심 · 솥밥 리필 무제한 · 11:00~14:30", map:"八代目儀兵衛 祇園"},
+    {g:"eat", ko:"하시모토야 (스파이스 카레)", ja:"橋本屋", area:"오사카 주오구 미나미센바 2-2-21-101 · 나가호리바시역 도보 3분", note:"3일차 점심 · 11:30~14:00 · 정리권 필요 · 일요일 휴무", map:"橋本屋 南船場 大阪"},
+    {g:"eat", ko:"스시히로 본점 (오마카세)", ja:"鮨ひろ", area:"오사카 나니와구 에비스니시 3-2-6 · 동물원앞역 도보 3분", note:"3일차 저녁 · 수요일 휴무 · 오마카세 10관 3,630엔~", map:"鮨ひろ 本店 大阪"},
+    {g:"eat", ko:"돈카츠 아몬", ja:"豚かつ あもん", area:"오사카 미야코지마구 가타마치 2-11-20 · 쿄바시역 도보 1분", note:"4일차 점심 · 화요일 휴무 · 11:00~14:30", map:"豚かつ あもん 京橋"},
+    {g:"eat", ko:"야키니쿠 고리쨩 우메다본점", ja:"焼肉ごりちゃん 梅田本店", area:"오사카 기타구 도야마초 8-21 이시모토빌 B1F", note:"4일차 저녁 · 17:00~새벽 · 20세 미만 입장 불가", map:"焼肉ごりちゃん 梅田本店"},
+    {g:"eat", ko:"돈카츠 에페", ja:"epais (エペ)", area:"오사카 기타구 소네자키신치 1-9-3 뉴하나빌 3F · 기타신치역 도보 2분", note:"5일차 점심 · 11:00~15:00 · 일·공휴일 휴무", map:"epais 北新地 とんかつ"},
+
+    {g:"see", ko:"오사카역", ja:"大阪駅", area:"JR 오사카역 · 우메다", note:"1일차 도착 · 코인락커/짐 보관", map:"大阪駅"},
+    {g:"see", ko:"니시키시장", ja:"錦市場", area:"쿄토 나카교구 니시키코지", note:"1일차 · 대부분 18시 전후 마감", map:"錦市場 京都"},
+    {g:"see", ko:"카모강", ja:"鴨川", area:"산조대교~시조대교 강변", note:"1일차 · 해 질 무렵 산책", map:"鴨川 三条大橋 京都"},
+    {g:"see", ko:"야사카신사 · 기온", ja:"八坂神社", area:"쿄토 히가시야마구 기온마치키타가와 625", note:"2일차 · 24시간 개방", map:"八坂神社 京都"},
+    {g:"see", ko:"도톤보리 리버크루즈", ja:"道頓堀リバークルーズ", area:"도톤보리 강 · 돈돈야 앞 승선장", note:"2일차 · 약 20분 · 성인 1,500엔", map:"道頓堀リバークルーズ"},
+    {g:"see", ko:"구로몬시장", ja:"黒門市場", area:"오사카 주오구 니혼바시 1·2초메", note:"2일차 · 니혼바시역 10번 출구", map:"黒門市場 大阪"},
+    {g:"see", ko:"신사이바시 상점가", ja:"心斎橋筋商店街", area:"신사이바시~난바 아케이드", note:"2일차 · 약 600m", map:"心斎橋筋商店街"},
+    {g:"see", ko:"하루카스 300", ja:"あべのハルカス300", area:"오사카 아베노구 아베노스지 1-1-43", note:"3일차 · 16F 전망대 · 야경 명소", map:"あべのハルカス300"},
+    {g:"see", ko:"덴노지공원 크리스마스마켓", ja:"天王寺公園 (てんしば)", area:"오사카 덴노지구 차우스야마초 5-55", note:"3일차 · 12월 한정 마켓", map:"天王寺公園 クリスマスマーケット"},
+    {g:"see", ko:"오사카성", ja:"大阪城天守閣", area:"오사카 주오구 오사카조 1-1", note:"4일차 · 9:00~17:00 · 입장 600엔", map:"大阪城 天守閣"},
+    {g:"see", ko:"우메다 · 나카노시마", ja:"梅田 · 中之島", area:"오사카 기타구", note:"4일차 · 일루미네이션 (오사카 광의 르네상스)", map:"大阪光のルネサンス 中之島"},
+    {g:"see", ko:"간사이국제공항", ja:"関西国際空港", area:"오사카 이즈미사노", note:"5일차 · 난카이 라피트 약 38분", map:"関西国際空港"}
+  ];
+
+  const DEFAULT_CHECK = [
+    {group:"depart", text:"여권 (유효기간 6개월 이상)"},
+    {group:"depart", text:"비짓재팬웹(JVisit Japan Web) 등록 · QR 저장"},
+    {group:"depart", text:"eSIM / 유심 개통"},
+    {group:"depart", text:"숙소·식당 예약 확인서 저장"},
+    {group:"depart", text:"트래블카드 엔화 충전 · 현금 3~5만엔"},
+    {group:"depart", text:"여행자보험 가입"},
+    {group:"pack", text:"110V 돼지코 + 멀티탭"},
+    {group:"pack", text:"동전지갑 (100엔 동전)"},
+    {group:"pack", text:"상비약 (감기·소화제·밴드)"},
+    {group:"pack", text:"보조배터리"},
+    {group:"pack", text:"우산 · 장갑 · 목도리"},
+    {group:"pack", text:"편한 신발"},
+    {group:"pack", text:"에코백 · 보조가방"}
+  ];
+
+  const GROUPS = {depart:"출발 전", pack:"짐 싸기"};
+  const PLACE_GROUPS = {stay:"숙소", eat:"식당", see:"명소 · 쇼핑"};
+  const PLACE_COLORS = {stay:"#39456A", eat:"#C0462F", see:"#2F6A5A"};
+
+  let state, ui = {tab:"timeline", day:"d1", editing:null};
+
+  /* ── helpers ── */
+  const $ = (s, r) => (r||document).querySelector(s);
+  const uid = () => Math.random().toString(36).slice(2,9) + Date.now().toString(36).slice(-3);
+  const esc = s => String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const mapUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
+  const fmtNum = n => Number(n).toLocaleString("ko-KR");
+
+  function save(){
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){}
+  }
+
+  function defaults(){
+    return {
+      v:1,
+      items: DEFAULT_ITEMS.map(it => ({id:uid(), done:false, ...it})),
+      check: DEFAULT_CHECK.map(c => ({id:uid(), done:false, ...c})),
+      checkGroups: [{id:"depart", name:GROUPS.depart}, {id:"pack", name:GROUPS.pack}],
+      expenses: [],
+      memo: ""
+    };
+  }
+
+  function load(){
+    let raw = null;
+    try { raw = localStorage.getItem(STORE_KEY); } catch(e){}
+    if (raw){
+      try {
+        const p = JSON.parse(raw);
+        if (p && Array.isArray(p.items) && Array.isArray(p.check)) {
+          const d = defaults();
+          return {
+            v:1,
+            items: p.items,
+            check: p.check,
+            checkGroups: Array.isArray(p.checkGroups) && p.checkGroups.length ? p.checkGroups : d.checkGroups,
+            expenses: Array.isArray(p.expenses) ? p.expenses : [],
+            memo: typeof p.memo === "string" ? p.memo : ""
+          };
+        }
+      } catch(e){}
+    }
+    return defaults();
+  }
+
+  function toast(msg){
+    const t = $("#toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(() => t.classList.remove("show"), 1600);
+  }
+
+  /* ── header: D-day + progress ── */
+  function dayDiffFromToday(target){
+    const now = new Date();
+    const t = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const g = new Date(target.getFullYear(), target.getMonth(), target.getDate());
+    return Math.round((g - t) / 86400000);
+  }
+
+  function renderHeader(){
+    const startIn = dayDiffFromToday(TRIP_START);
+    const endIn = dayDiffFromToday(TRIP_END);
+    const badge = $("#dday");
+    if (startIn > 0){
+      badge.textContent = "D-" + startIn;
+      badge.classList.remove("ongoing");
+      badge.classList.remove("hidden");
+    } else if (startIn === 0){
+      badge.textContent = "D-DAY";
+      badge.classList.add("ongoing");
+      badge.classList.remove("hidden");
+    } else if (endIn >= 0){
+      badge.textContent = "여행 " + (1 - startIn) + "일차";
+      badge.classList.add("ongoing");
+      badge.classList.remove("hidden");
+    } else {
+      badge.classList.add("hidden");
+    }
+
+    const total = state.items.length;
+    const done = state.items.filter(i => i.done).length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+    $("#progressFill").style.width = pct + "%";
+    $("#progressText").textContent = done + " / " + total + " 완료";
+  }
+
+  /* ── timeline ── */
+  function renderDaybar(){
+    $("#daybar").innerHTML = DAYS.map(d => {
+      const list = state.items.filter(i => i.day === d.id);
+      const allDone = list.length > 0 && list.every(i => i.done);
+      return '<button class="pill ' + (ui.day === d.id ? "on " : "") + (allDone ? "all-done" : "") + '" data-day="' + d.id + '">'
+        + '<b>' + d.n + '일차</b><span>' + d.date + ' (' + d.wd + ')</span></button>';
+    }).join("");
+  }
+
+  function renderTimeline(){
+    const day = DAYS.find(d => d.id === ui.day) || DAYS[0];
+    const list = state.items.filter(i => i.day === day.id);
+    const done = list.filter(i => i.done).length;
+
+    $("#dayhead").innerHTML =
+      '<div class="row"><h2>12.' + day.date.split(".")[1] + ' <em>' + day.wd + '요일 · ' + day.n + '일차</em></h2>'
+      + '<span class="count">' + done + ' / ' + list.length + '</span></div>'
+      + '<p class="tagline">' + esc(day.tagline) + '</p>';
+
+    if (!list.length){
+      $("#timelineList").innerHTML = '<p class="empty">아직 일정이 없어요. 아래 버튼으로 추가해 보세요.</p>';
+    } else {
+      $("#timelineList").innerHTML = list.map(it => {
+        const mapQ = it.map || it.place || it.title;
+        return '<article class="item ' + (it.done ? "done" : "") + '" data-id="' + it.id + '">'
+          + '<button class="check" data-act="toggle" data-id="' + it.id + '" aria-label="완료 표시">'
+            + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.6l4.2 4.2L19 6.8"/></svg>'
+          + '</button>'
+          + '<div class="body">'
+            + '<div class="meta">'
+              + (it.time ? '<span class="time">' + esc(it.time) + '</span>' : '')
+              + '<span class="tag ' + esc(it.type || "spot") + '">' + (TYPES[it.type] || "일정") + '</span>'
+            + '</div>'
+            + '<h3 class="title">' + esc(it.title) + '</h3>'
+            + (it.place ? '<p class="place">' + esc(it.place) + '</p>' : '')
+            + (it.note ? '<p class="note">' + esc(it.note) + '</p>' : '')
+            + (mapQ ? '<a class="mapbtn" href="' + mapUrl(mapQ) + '" target="_blank" rel="noopener noreferrer">'
+                + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6.4-6.3 6.4-11A6.4 6.4 0 0 0 5.6 10c0 4.7 6.4 11 6.4 11z"/><circle cx="12" cy="9.9" r="2"/></svg>'
+                + '지도</a>' : '')
+          + '</div>'
+          + '<button class="more" data-act="edit" data-id="' + it.id + '" aria-label="수정">⋯</button>'
+        + '</article>';
+      }).join("");
+    }
+    renderDaybar();
+    renderHeader();
+  }
+
+  /* ── places ── */
+  function renderPlaces(){
+    const order = ["stay", "eat", "see"];
+    $("#placesWrap").innerHTML = order.map(g => {
+      const list = PLACES.filter(p => p.g === g);
+      return '<div class="section">'
+        + '<div class="section-head"><h2>' + PLACE_GROUPS[g] + '</h2><span>' + list.length + '곳</span></div>'
+        + list.map(p =>
+            '<a class="pcard" href="' + mapUrl(p.map || p.ko) + '" target="_blank" rel="noopener noreferrer">'
+            + '<div class="top"><span class="dot" style="background:' + PLACE_COLORS[g] + '"></span><div style="flex:1;min-width:0">'
+              + '<h3>' + esc(p.ko) + '</h3>'
+              + '<p class="ja">' + esc(p.ja) + '</p>'
+              + '<p class="area">' + esc(p.area) + '</p>'
+            + '</div>'
+            + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#B4AEA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px"><path d="M9 6l6 6-6 6"/></svg>'
+            + '</div>'
+            + (p.note ? '<p class="pnote">' + esc(p.note) + '</p>' : '')
+            + '</a>'
+          ).join("")
+        + '</div>';
+    }).join("");
+  }
+
+  /* ── checklist ── */
+  function renderCheck(){
+    const groups = state.checkGroups;
+    const total = state.check.length;
+    const done = state.check.filter(c => c.done).length;
+    $("#checkCount").textContent = done + " / " + total;
+
+    $("#checkWrap").innerHTML = groups.map(g => {
+      const list = state.check.filter(c => c.group === g.id);
+      return '<div class="cl-group">'
+        + '<h3>' + esc(g.name) + '</h3>'
+        + list.map(c =>
+            '<div class="cl-item ' + (c.done ? "done" : "") + '">'
+            + '<button class="check" data-act="ctoggle" data-id="' + c.id + '" aria-label="체크">'
+              + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.6l4.2 4.2L19 6.8"/></svg>'
+            + '</button>'
+            + '<span class="cl-text">' + esc(c.text) + '</span>'
+            + '<button class="del" data-act="cdel" data-id="' + c.id + '" aria-label="삭제">×</button>'
+            + '</div>'
+          ).join("")
+        + '<div class="cl-add"><input type="text" data-add="' + g.id + '" placeholder="' + esc(g.name) + ' 항목 추가" maxlength="60"><button data-act="cadd" data-group="' + g.id + '">+</button></div>'
+        + '</div>';
+    }).join("");
+  }
+
+  /* ── expenses + memo ── */
+  function renderMoney(){
+    const exp = state.expenses;
+    const sumJ = exp.filter(e => e.cur === "JPY").reduce((a,b) => a + Number(b.amount || 0), 0);
+    const sumK = exp.filter(e => e.cur === "KRW").reduce((a,b) => a + Number(b.amount || 0), 0);
+    $("#totalJpy").textContent = "¥" + fmtNum(Math.round(sumJ));
+    $("#totalKrw").textContent = fmtNum(Math.round(sumK)) + "원";
+    $("#expCount").textContent = exp.length ? exp.length + "건" : "";
+
+    $("#expList").innerHTML = exp.length ? exp.slice().reverse().map(e =>
+      '<div class="exp-row">'
+      + '<span class="cat">' + esc(e.cat) + '</span>'
+      + '<span class="txt">' + esc(e.memo || e.cat) + '</span>'
+      + '<span class="amt">' + (e.cur === "JPY" ? "¥" + fmtNum(Math.round(Number(e.amount)||0)) : fmtNum(Math.round(Number(e.amount)||0)) + "원") + '</span>'
+      + '<button class="del" data-act="edel" data-id="' + e.id + '" aria-label="삭제">×</button>'
+      + '</div>'
+    ).join("") : '<p class="empty">아직 기록이 없어요.</p>';
+
+    if ($("#memoBox").value !== state.memo) $("#memoBox").value = state.memo;
+  }
+
+  /* ── sheet ── */
+  function openSheet(html){
+    const s = $("#sheet");
+    s.innerHTML = '<div class="handle"></div>' + html;
+    s.setAttribute("aria-hidden", "false");
+    const b = $("#backdrop");
+    b.classList.remove("hidden");
+    requestAnimationFrame(() => {
+      b.classList.add("show");
+      s.classList.add("show");
+    });
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeSheet(){
+    const s = $("#sheet"), b = $("#backdrop");
+    s.classList.remove("show");
+    b.classList.remove("show");
+    document.body.style.overflow = "";
+    setTimeout(() => { b.classList.add("hidden"); s.setAttribute("aria-hidden", "true"); }, 240);
+  }
+
+  function openItemSheet(dayId, itemId){
+    const it = itemId ? state.items.find(i => i.id === itemId) : null;
+    ui.editing = {day: dayId, id: itemId || null};
+    const typeOpts = Object.keys(TYPES).map(k =>
+      '<option value="' + k + '"' + (it && it.type === k ? " selected" : "") + '>' + TYPES[k] + '</option>').join("");
+    openSheet(
+      '<h2>' + (it ? "일정 수정" : "일정 추가") + '</h2>'
+      + '<div class="two">'
+        + '<div class="field"><label>시간</label><input id="fTime" type="text" inputmode="numeric" placeholder="10:00" value="' + esc(it ? it.time : "") + '"></div>'
+        + '<div class="field"><label>분류</label><select id="fType">' + typeOpts + '</select></div>'
+      + '</div>'
+      + '<div class="field"><label>제목</label><input id="fTitle" type="text" placeholder="예: 저녁 야키토리" value="' + esc(it ? it.title : "") + '"></div>'
+      + '<div class="field"><label>장소 (한국어 · 일본어)</label><input id="fPlace" type="text" placeholder="예: 焼肉ごりちゃん 梅田本店" value="' + esc(it ? it.place : "") + '"></div>'
+      + '<div class="field"><label>지도 검색어</label><input id="fMap" type="text" placeholder="비우면 장소로 검색" value="' + esc(it ? it.map : "") + '"></div>'
+      + '<div class="field"><label>메모</label><textarea id="fNote" placeholder="예약 시간, 가격, 같이 가고 싶은 것…">' + esc(it ? it.note : "") + '</textarea></div>'
+      + '<div class="sheet-actions">'
+        + (it ? '<button class="danger" id="fDelete">삭제</button>' : '')
+        + '<button class="primary grow" id="fSave">' + (it ? "저장" : "추가하기") + '</button>'
+      + '</div>'
+    );
+    setTimeout(() => { const t = $("#fTitle"); if (t && !it) t.focus(); }, 280);
+  }
+
+  function saveItemSheet(){
+    const e = ui.editing; if (!e) return;
+    const title = ($("#fTitle").value || "").trim();
+    if (!title){ toast("제목을 입력해 주세요"); $("#fTitle").focus(); return; }
+    const data = {
+      time: ($("#fTime").value || "").trim(),
+      type: $("#fType").value,
+      title: title,
+      place: ($("#fPlace").value || "").trim(),
+      map: ($("#fMap").value || "").trim(),
+      note: ($("#fNote").value || "").trim()
+    };
+    if (e.id){
+      const it = state.items.find(i => i.id === e.id);
+      if (it) Object.assign(it, data);
+      toast("수정했어요");
+    } else {
+      state.items.push({id:uid(), day:e.day, done:false, ...data});
+      toast("일정을 추가했어요");
+    }
+    save();
+    closeSheet();
+    renderTimeline();
+  }
+
+  function openSettings(){
+    openSheet(
+      '<h2>설정</h2>'
+      + '<div class="menu-list">'
+      + '<button data-act="resetItems"><span>기본 일정으로 되돌리기<small>일정과 완료 표시를 처음 상태로</small></span><span>↺</span></button>'
+      + '<button data-act="resetCheck"><span>체크리스트 초기화<small>체크 표시와 추가한 항목을 지움</small></span><span>↺</span></button>'
+      + '<button data-act="clearExp"><span>경비 기록 비우기<small>메모는 그대로 남아요</small></span><span>↺</span></button>'
+      + '<button class="warn" data-act="clearAll"><span>모든 데이터 초기화<small>일정·체크·경비·메모 전부 삭제</small></span><span>⌫</span></button>'
+      + '</div>'
+      + '<p class="hint">아이폰 Safari에서 공유 → ‘홈 화면에 추가’를 누르면 앱처럼 전체 화면으로 열려요.</p>'
+    );
+  }
+
+  /* ── events ── */
+  function setTab(tab){
+    ui.tab = tab;
+    ["timeline","places","check","money"].forEach(t => {
+      $("#view-" + t).classList.toggle("hidden", t !== tab);
+    });
+    document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
+    if (tab === "timeline") renderTimeline();
+    if (tab === "places") renderPlaces();
+    if (tab === "check") renderCheck();
+    if (tab === "money") renderMoney();
+    window.scrollTo({top:0, behavior:"auto"});
+  }
+
+  document.querySelectorAll(".tab").forEach(btn => {
+    btn.addEventListener("click", () => setTab(btn.dataset.tab));
+  });
+
+  $("#daybar").addEventListener("click", ev => {
+    const p = ev.target.closest("[data-day]");
+    if (!p) return;
+    ui.day = p.dataset.day;
+    renderTimeline();
+  });
+
+  $("#timelineList").addEventListener("click", ev => {
+    const t = ev.target.closest("[data-act]");
+    if (!t) return;
+    if (t.dataset.act === "toggle"){
+      const it = state.items.find(i => i.id === t.dataset.id);
+      if (it){
+        it.done = !it.done;
+        save();
+        renderTimeline();
+      }
+    }
+    if (t.dataset.act === "edit"){
+      ev.preventDefault();
+      openItemSheet(ui.day, t.dataset.id);
+    }
+  });
+
+  // 카드 본문을 눌러도 수정 시트가 열리도록 (지도 버튼은 제외)
+  $("#timelineList").addEventListener("click", ev => {
+    if (ev.target.closest("[data-act]") || ev.target.closest("a")) return;
+    const card = ev.target.closest(".item");
+    if (card) openItemSheet(ui.day, card.dataset.id);
+  });
+
+  $("#addItem").addEventListener("click", () => openItemSheet(ui.day, null));
+
+  $("#sheet").addEventListener("click", ev => {
+    const t = ev.target.closest("[data-act]");
+    if (!t) return;
+    const act = t.dataset.act;
+    if (act === "resetItems"){
+      if (confirm("기본 일정으로 되돌릴까요? 추가·수정한 일정은 사라져요.")){
+        const fresh = defaults();
+        state.items = fresh.items;
+        save(); closeSheet(); renderTimeline(); toast("기본 일정으로 되돌렸어요");
+      }
+    }
+    if (act === "resetCheck"){
+      if (confirm("체크리스트를 처음 상태로 되돌릴까요?")){
+        const fresh = defaults();
+        state.check = fresh.check;
+        state.checkGroups = fresh.checkGroups;
+        save(); closeSheet(); renderCheck(); toast("체크리스트를 초기화했어요");
+      }
+    }
+    if (act === "clearExp"){
+      if (confirm("경비 기록을 모두 지울까요?")){
+        state.expenses = [];
+        save(); closeSheet(); renderMoney(); toast("경비 기록을 비웠어요");
+      }
+    }
+    if (act === "clearAll"){
+      if (confirm("모든 데이터를 지우고 처음 상태로 돌아갈까요?")){
+        state = defaults();
+        save(); closeSheet(); renderAll(); toast("처음 상태로 돌아갔어요");
+      }
+    }
+  });
+
+  $("#sheet").addEventListener("click", ev => {
+    if (ev.target.id === "fSave") saveItemSheet();
+    if (ev.target.id === "fDelete"){
+      const e = ui.editing;
+      if (!e || !e.id) return;
+      if (confirm("이 일정을 삭제할까요?")){
+        state.items = state.items.filter(i => i.id !== e.id);
+        save(); closeSheet(); renderTimeline(); toast("삭제했어요");
+      }
+    }
+  });
+
+  $("#btnSettings").addEventListener("click", openSettings);
+  $("#backdrop").addEventListener("click", closeSheet);
+  document.addEventListener("keydown", ev => { if (ev.key === "Escape") closeSheet(); });
+
+  // checklist events (delegated)
+  $("#checkWrap").addEventListener("click", ev => {
+    const t = ev.target.closest("[data-act]");
+    if (!t) return;
+    if (t.dataset.act === "ctoggle"){
+      const c = state.check.find(x => x.id === t.dataset.id);
+      if (c){ c.done = !c.done; save(); renderCheck(); }
+    }
+    if (t.dataset.act === "cdel"){
+      state.check = state.check.filter(x => x.id !== t.dataset.id);
+      save(); renderCheck();
+    }
+    if (t.dataset.act === "cadd"){
+      const g = t.dataset.group;
+      const input = $('#checkWrap [data-add="' + g + '"]');
+      const text = (input.value || "").trim();
+      if (!text){ input.focus(); return; }
+      state.check.push({id:uid(), group:g, text:text, done:false});
+      save(); renderCheck();
+      const again = $('#checkWrap [data-add="' + g + '"]');
+      if (again) again.focus();
+    }
+  });
+  $("#checkWrap").addEventListener("keydown", ev => {
+    if (ev.key === "Enter" && ev.target.dataset && ev.target.dataset.add){
+      ev.preventDefault();
+      const g = ev.target.dataset.add;
+      const btn = $('#checkWrap [data-act="cadd"][data-group="' + g + '"]');
+      if (btn) btn.click();
+    }
+  });
+
+  // money
+  $("#expAdd").addEventListener("click", () => {
+    const amount = parseFloat($("#expAmount").value);
+    if (!amount || amount <= 0){ toast("금액을 입력해 주세요"); $("#expAmount").focus(); return; }
+    state.expenses.push({
+      id: uid(),
+      amount: amount,
+      cur: $("#expCur").value,
+      cat: $("#expCat").value,
+      memo: ($("#expMemo").value || "").trim(),
+      ts: Date.now()
+    });
+    save();
+    $("#expAmount").value = "";
+    $("#expMemo").value = "";
+    renderMoney();
+    toast("기록했어요");
+  });
+
+  $("#expList").addEventListener("click", ev => {
+    const t = ev.target.closest("[data-act='edel']");
+    if (!t) return;
+    state.expenses = state.expenses.filter(e => e.id !== t.dataset.id);
+    save(); renderMoney();
+  });
+
+  let memoTimer = null;
+  $("#memoBox").addEventListener("input", () => {
+    state.memo = $("#memoBox").value;
+    $("#memoSaved").textContent = "저장 중…";
+    clearTimeout(memoTimer);
+    memoTimer = setTimeout(() => {
+      save();
+      $("#memoSaved").textContent = "저장됨";
+      setTimeout(() => { $("#memoSaved").textContent = ""; }, 1400);
+    }, 400);
+  });
+
+  function renderAll(){
+    renderTimeline();
+    renderPlaces();
+    renderCheck();
+    renderMoney();
+  }
+
+  /* ── boot ── */
+  state = load();
+  // 오늘 날짜가 여행 기간이면 그 날짜의 일차를 자동 선택
+  (function pickToday(){
+    const now = new Date();
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const idx = Math.round((today - TRIP_START) / 86400000);
+    if (idx >= 0 && idx < DAYS.length) ui.day = DAYS[idx].id;
+  })();
+  renderAll();
+  renderHeader();
+  setInterval(renderHeader, 60000);
+})();
+</script>
+</body>
+</html>
