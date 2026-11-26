@@ -15,6 +15,7 @@
 <link rel="icon" type="image/png" href="icon-180.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232C3654'/%3E%3Ccircle cx='32' cy='26' r='13' fill='%23E05B45'/%3E%3Cpath d='M13 24h38v5H13z' fill='%23FBF6EF'/%3E%3Cpath d='M22 29h5v22h-5zM37 29h5v22h-5z' fill='%23FBF6EF'/%3E%3Cpath d='M17 36h30v4H17z' fill='%23FBF6EF'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.webmanifest">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
   :root{
     --bg:#FBF6EF;
@@ -252,7 +253,7 @@
   /* ── tab bar ── */
   .tabbar{
     position:fixed;left:0;right:0;bottom:0;z-index:45;
-    display:grid;grid-template-columns:repeat(4,1fr);
+    display:grid;grid-template-columns:repeat(5,1fr);
     padding-bottom:env(safe-area-inset-bottom, 0px);
     background:rgba(255,253,250,.94);
     backdrop-filter:saturate(180%) blur(18px);
@@ -261,10 +262,10 @@
   }
   .tab{
     height:var(--tab-h);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
-    color:#A49D93;font-size:10.5px;font-weight:800;letter-spacing:-0.02em;
+    color:#A49D93;font-size:10px;font-weight:800;letter-spacing:-0.02em;
     transition:color .15s ease;
   }
-  .tab svg{width:22px;height:22px}
+  .tab svg{width:21px;height:21px}
   .tab.on{color:var(--accent)}
   .tab.on svg{stroke-width:2}
 
@@ -321,6 +322,100 @@
     opacity:0;transition:all .2s ease;pointer-events:none;white-space:nowrap;
   }
   .toast.show{opacity:1;transform:translate(-50%,0)}
+
+  /* ── day route map ── */
+  .mapcard{
+    margin:10px 14px 4px;background:var(--card);border:1px solid var(--line);
+    border-radius:var(--r);box-shadow:var(--shadow);overflow:hidden;
+  }
+  .maphead{display:flex;align-items:center;gap:9px;width:100%;padding:10px 12px;text-align:left}
+  .maphead .mh-ico{
+    width:27px;height:27px;border-radius:9px;flex:0 0 auto;
+    background:var(--accent-soft);color:#C0462F;display:grid;place-items:center;
+  }
+  .maphead .mh-ico svg{width:15px;height:15px}
+  .maphead .mh-txt{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+  .maphead .mh-txt b{font-size:13.5px;font-weight:800;letter-spacing:-0.025em}
+  .maphead .mh-txt small{font-size:11px;font-weight:700;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .maphead .chev{font-size:11px;font-weight:800;color:#9A938A;display:inline-flex;align-items:center;gap:2px;flex:0 0 auto}
+  .maphead .chev svg{width:13px;height:13px;transition:transform .22s ease}
+  .mapcard.open .chev svg{transform:rotate(180deg)}
+  .mapchips{display:none;gap:6px;padding:0 12px 8px;overflow-x:auto;scrollbar-width:none}
+  .mapchips::-webkit-scrollbar{display:none}
+  .mapcard.open .mapchips.show{display:flex}
+  .mchip{
+    flex:0 0 auto;padding:5px 10px;border-radius:999px;background:#F5F1EB;border:1px solid #E9E0D4;
+    font-size:11px;font-weight:800;color:#6B665F;white-space:nowrap;letter-spacing:-0.02em;
+  }
+  .mchip.on{background:var(--indigo);border-color:var(--indigo);color:#fff}
+  #mapBox{height:0;overflow:hidden;transition:height .24s cubic-bezier(.32,.72,0,1)}
+  .mapcard.open #mapBox{height:238px}
+  #map{width:100%;height:238px;background:#EFE8DD}
+  .mapfoot{display:flex;justify-content:space-between;gap:8px;padding:7px 12px 9px;font-size:10.5px;color:#A39C92;border-top:1px solid #F6F0E8}
+  .leaflet-container{font-family:inherit;background:#EFE8DD}
+  .leaflet-tile{filter:saturate(.82) contrast(.98) brightness(1.02)}
+  .leaflet-control-zoom a{width:26px;height:26px;line-height:24px;font-size:16px;color:#5B564F}
+  .leaflet-control-attribution{font-size:9px !important;background:rgba(255,253,250,.8) !important}
+  .pin{
+    width:26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+    display:grid;place-items:center;font-size:12px;font-weight:800;
+    font-variant-numeric:tabular-nums;border:2px solid #fff;
+    box-shadow:0 3px 8px rgba(60,40,24,.34);
+  }
+  .pin.a{background:var(--indigo)}
+  .pin.z{background:var(--mint)}
+  .leaflet-popup-content{margin:8px 12px 9px;font-size:12px;line-height:1.45}
+  .leaflet-popup-content b{display:block;font-size:12.5px;margin-bottom:3px;letter-spacing:-0.01em}
+  .leaflet-popup-content .pp-row{color:var(--sub);font-size:11.5px}
+  .leaflet-popup-content .pp-time{color:var(--accent);font-weight:800;font-size:11.5px}
+
+  /* ── recommendations ── */
+  .recbar{display:flex;gap:6px;padding:14px 14px 2px;overflow-x:auto;scrollbar-width:none}
+  .recbar::-webkit-scrollbar{display:none}
+  .chip{
+    flex:0 0 auto;padding:7px 13px;border-radius:999px;
+    background:rgba(255,255,255,.78);border:1px solid var(--line);
+    font-size:12.5px;font-weight:800;color:#6B665F;letter-spacing:-0.02em;
+    white-space:nowrap;
+  }
+  .chip:active{transform:scale(.97)}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:0 5px 14px rgba(224,91,69,.26)}
+  .recgroup-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:15px 18px 1px}
+  .recgroup-head h2{font-size:15.5px;font-weight:800;letter-spacing:-0.025em}
+  .recgroup-head h2 em{font-style:normal;color:var(--accent);font-size:12px;font-weight:800;margin-left:5px}
+  .recgroup-head span{font-size:11px;font-weight:700;color:var(--sub);white-space:nowrap}
+  .reccard{
+    background:var(--card);border:1px solid var(--line);border-radius:var(--r);
+    box-shadow:var(--shadow);padding:13px 13px 12px;margin:9px 14px 0;
+  }
+  .reccard .rc-top{display:flex;align-items:flex-start;gap:9px}
+  .reccard .rc-num{
+    width:21px;height:21px;border-radius:7px;background:var(--amber-soft);color:#96601B;
+    font-size:11px;font-weight:800;display:grid;place-items:center;flex:0 0 auto;margin-top:1px;
+    font-variant-numeric:tabular-nums;
+  }
+  .reccard h3{font-size:15px;font-weight:800;letter-spacing:-0.025em;flex:1;min-width:0;line-height:1.3}
+  .reccard .rc-area{font-size:11.5px;color:#8B857C;font-weight:600;margin-top:3px}
+  .rc-meta{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+  .rc-tag{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;background:var(--gray-soft);color:#6C665E}
+  .rc-tag.slot{background:var(--indigo-soft);color:#39456A}
+  .rc-why{font-size:12.5px;color:#7C766D;line-height:1.5;margin-top:8px}
+  .rc-actions{display:flex;gap:7px;margin-top:11px}
+  .rc-map{
+    display:inline-flex;align-items:center;gap:4px;padding:8px 11px;border-radius:10px;
+    background:#F3F5FA;border:1px solid #E3E7F1;color:#39456A;font-size:11.5px;font-weight:800;
+    flex:0 0 auto;
+  }
+  .rc-map svg{width:12px;height:12px}
+  .rc-add{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:4px;
+    padding:8px 10px;border-radius:10px;background:var(--accent);color:#fff;
+    font-size:12px;font-weight:800;letter-spacing:-0.02em;
+    box-shadow:0 5px 14px rgba(224,91,69,.2);
+  }
+  .rc-add:active{transform:translateY(1px)}
+  .rc-add.added{background:var(--mint-soft);color:#2F6A5A;box-shadow:none}
+  .rec-legend{padding:16px 20px 6px;font-size:11.5px;color:#A39C92;text-align:center;line-height:1.55}
 </style>
 </head>
 <body>
@@ -351,6 +446,23 @@
   <section id="view-timeline">
     <div class="daybar" id="daybar"></div>
     <div class="dayhead" id="dayhead"></div>
+    <div class="mapcard open" id="mapcard">
+      <button class="maphead" id="mapToggle" aria-expanded="true" aria-controls="mapBox">
+        <span class="mh-ico">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4.2 3.6 6.4v13.4L9 17.6l6 2.2 5.4-2.2V4.2L15 6.4 9 4.2z"/><path d="M9 4.2v13.4M15 6.4v13.4"/></svg>
+        </span>
+        <span class="mh-txt">
+          <b id="mapTitle">1일차 동선 지도</b>
+          <small id="mapMeta">지도를 불러오는 중…</small>
+        </span>
+        <span class="chev"><span id="mapChev">접기</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9.5l6 6 6-6"/></svg>
+        </span>
+      </button>
+      <div class="mapchips" id="mapChips"></div>
+      <div id="mapBox"><div id="map"></div></div>
+      <div class="mapfoot"><span>번호 순서대로 이동 동선</span><span>핀을 누르면 장소·시간</span></div>
+    </div>
     <div class="list" id="timelineList"></div>
     <button class="addbtn" id="addItem">＋ 이 날 일정 추가</button>
     <p class="hint">시간은 참고용 추천이에요. 카드를 누르면 시간·메모를 고칠 수 있어요.</p>
@@ -359,6 +471,15 @@
   <section id="view-places" class="hidden">
     <div id="placesWrap"></div>
     <p class="hint">장소를 누르면 구글 지도에서 바로 검색돼요.</p>
+  </section>
+
+  <section id="view-recs" class="hidden">
+    <div class="section" style="padding-bottom:0">
+      <div class="section-head"><h2>남는 시간 · 주변 추천</h2><span id="recCount"></span></div>
+    </div>
+    <div class="recbar" id="recbar"></div>
+    <div id="recsWrap"></div>
+    <p class="rec-legend">일정 사이 빈 시간에 맞춘 주변 코스예요.<br>‘일정에 추가’를 누르면 그날 타임라인과 동선 지도에 함께 들어가요.</p>
   </section>
 
   <section id="view-check" class="hidden">
@@ -427,6 +548,12 @@
     </svg>
     <span>장소</span>
   </button>
+  <button class="tab" data-tab="recs">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M12 3.4l2.3 4.9 5.3.7-3.9 3.7 1 5.3-4.7-2.6-4.7 2.6 1-5.3L4.4 9l5.3-.7 2.3-4.9z"/>
+    </svg>
+    <span>추천</span>
+  </button>
   <button class="tab" data-tab="check">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3.6" y="3.6" width="16.8" height="16.8" rx="4.4"/><path d="M8 12.2l2.6 2.6 5.4-5.8"/>
@@ -437,7 +564,7 @@
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
       <rect x="3" y="6.4" width="18" height="12.8" rx="3.4"/><path d="M3 10.6h18M16.4 15h1.8"/>
     </svg>
-    <span>메모·경비</span>
+    <span>메모</span>
   </button>
 </nav>
 
@@ -445,6 +572,7 @@
 <div class="sheet" id="sheet" aria-hidden="true"></div>
 <div class="toast" id="toast"></div>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 (function(){
   "use strict";
@@ -462,6 +590,97 @@
   ];
 
   const TYPES = {food:"식당", stay:"숙소", spot:"명소", shop:"쇼핑", move:"이동"};
+
+  /* ── 좌표 (2026-11 Google Maps 기준) ── */
+  const COORDS = {
+    "大阪駅": [34.70249, 135.49595],
+    "麦と麺助 大阪": [34.71135, 135.50000],
+    "鈴 花屋町 朝霧 京都": [34.99179, 135.74650],
+    "錦市場 京都": [35.00503, 135.76472],
+    "鴨川 三条大橋 京都": [35.00903, 135.77160],
+    "京うな和 本店 四条堺町": [35.00428, 135.76356],
+    "八坂神社 京都": [35.00366, 135.77855],
+    "八代目儀兵衛 祇園": [35.00412, 135.77719],
+    "アパートメントホテル 日本橋 大阪": [34.65975, 135.50604],
+    "道頓堀リバークルーズ": [34.66914, 135.50271],
+    "黒門市場 大阪": [34.66535, 135.50624],
+    "やきとり 難波 大阪": [34.66708, 135.49892],
+    "心斎橋筋商店街": [34.67251, 135.50137],
+    "御堂筋 イルミネーション 大阪": [34.66575, 135.50104],
+    "橋本屋 南船場 大阪": [34.67732, 135.50547],
+    "天王寺 大阪": [34.65250, 135.50631],
+    "あべのハルカス300": [34.64631, 135.51331],
+    "天王寺公園 クリスマスマーケット": [34.64854, 135.51105],
+    "鮨ひろ 本店 大阪": [34.65115, 135.50418],
+    "大阪城 天守閣": [34.68730, 135.52586],
+    "豚かつ あもん 京橋": [34.69602, 135.53096],
+    "梅田 大阪": [34.70503, 135.49843],
+    "焼肉ごりちゃん 梅田本店": [34.70372, 135.50330],
+    "大阪光のルネサンス 中之島": [34.69355, 135.50391],
+    "epais 北新地 とんかつ": [34.69759, 135.49958],
+    "関西国際空港": [34.43200, 135.23660]
+  };
+
+  /* ── 남는 시간 · 주변 추천 ── */
+  const RECS = [
+    // 1일차 · 오사카 나카쓰 → 교토
+    {id:"r1a", day:"d1", title:"나카자키초 카페 골목", place:"中崎町 (coucou amande 등)", area:"오사카 기타구 나카자키초 · 오사카역 도보 12분", walk:"도보 12분", slot:"점심 후 12:40~13:40", time:"12:45", type:"food",
+      why:"무기토 멘스케 점심을 마치고 교토로 떠나기 전 1시간. 레트로 골목에 작은 카페·빈티지숍이 붙어 있어서 커피 한 잔 하고 14시 기차를 타기 딱 좋아요.", map:"中崎町 カフェ 大阪", ll:[34.70866, 135.50491]},
+    {id:"r1b", day:"d1", title:"교토 철도박물관 · 우메코지 공원", place:"梅小路公園 · 京都鉄道博物館", area:"교토 시모교구 · 단바구치역 도보 5분", walk:"도보 5분", slot:"체크인 전 14:30~15:50", time:"14:30", type:"spot",
+      why:"숙소 체크인이 16시라 14시 교토 도착 후 1시간 반이 비어요. 짐을 맡기고 역 앞 우메코지 공원과 철도박물관 앞마당(증기기관차 전시)을 걷기 딱 좋은 거리예요.", map:"梅小路公園 京都", ll:[34.98634, 135.74635]},
+    {id:"r1c", day:"d1", title:"신쿄고쿠 상점가", place:"新京極商店街", area:"교토 나카교구 · 니시키시장 동쪽 끝 도보 2분", walk:"도보 2분", slot:"니시키시장 직후 17:20~17:50", time:"17:20", type:"shop",
+      why:"니시키시장이 18시 전후로 닫아도 신쿄고쿠는 20시까지 열어요. 간식과 기념품을 사고 비를 피하기도 좋아요.", map:"新京極商店街 京都", ll:[35.00618, 135.76721]},
+    {id:"r1d", day:"d1", title:"폰토초 골목", place:"先斗町通", area:"교토 나카교구 · 카모강 산책로 바로 옆", walk:"도보 1분", slot:"저녁 식사 전 18:40~19:00", time:"18:40", type:"spot",
+      why:"카모강 산책을 마치고 장어집으로 가는 길에 붙어 있는 좁은 골목. 저녁 19시 예약 전에 20분이면 들러볼 수 있고 등불 켜진 골목 사진이 잘 나와요.", map:"先斗町 京都", ll:[35.00607, 135.77109]},
+
+    // 2일차 · 교토 기온 → 오사카 도톤보리
+    {id:"r2a", day:"d2", title:"니넨자카 · 산넨자카", place:"二年坂 · 三年坂", area:"기온 · 야사카신사에서 도보 3분", walk:"도보 3분", slot:"야사카신사 후 10:40~11:40", time:"10:40", type:"spot",
+      why:"10시 야사카신사 관람 뒤 점심 12시까지 남는 시간. 돌계단 골목과 전통 가옥이 이어지고 내리막이라 걸기 편해요.", map:"二年坂 京都", ll:[34.99860, 135.78082]},
+    {id:"r2b", day:"d2", title:"겐닌지 (建仁寺)", place:"建仁寺", area:"기온 · 야사카신사 도보 5분", walk:"도보 5분", slot:"추울 때 11:00~11:50", time:"11:00", type:"spot",
+      why:"12월 기온은 바람이 매서워요. 실내에서 정원과 법당 천장의 쌍룡도를 보는 코스라 40분이면 돌고 몸도 덥혀요(10~17시).", map:"建仁寺 京都", ll:[35.00004, 135.77356]},
+    {id:"r2c", day:"d2", title:"오렌지스트리트", place:"オレンジストリート (南堀江)", area:"오사카 니시구 미나미호리 · 숙소에서 도보 12분", walk:"도보 12분", slot:"체크인 후 14:40~16:00", time:"14:40", type:"shop",
+      why:"숙소 체크인 14시 후 도톤보리 16시 30분까지 2시간 여유. 편집숍·카페가 늘어선 거리에서 커피 한 잔 하면 도톤보리까지 걸어서 이어져요.", map:"オレンジストリート 大阪", ll:[34.67104, 135.49628]},
+    {id:"r2d", day:"d2", title:"호젠지 요코초", place:"法善寺横丁", area:"도톤보리 · 도보 3분", walk:"도보 3분", slot:"구로몬시장 후 18:10~18:50", time:"18:10", type:"spot",
+      why:"구로몬시장이 18시 전후로 마감해 저녁 19시까지 1시간이 비어요. 돌바닥 골목과 물을 끼얹는 부동명왕이 유명하고 15분이면 다 둘러봐요.", map:"法善寺横丁 大阪", ll:[34.66819, 135.50276]},
+
+    // 3일차 · 덴노지 · 신세카이 · 시텐노지
+    {id:"r3a", day:"d3", title:"시텐노지 (四天王寺)", place:"四天王寺", area:"덴노지역 도보 12분 · 하루카스까지 도보 15분", walk:"도보 12분", slot:"덴노지 도착 후 13:30~15:00", time:"13:30", type:"spot",
+      why:"13시 덴노지 도착, 하루카스 16시 30분 사이 가장 큰 공백이에요. 일본에서 가장 오래된 사찰로 경내가 넓고 12월엔 한적해서 1시간 반이 편하게 지나가요.", map:"四天王寺 大阪", ll:[34.65446, 135.51652]},
+    {id:"r3b", day:"d3", title:"잔잔요코초", place:"ジャンジャン横丁", area:"신세카이 · 동물원앞역 도보 1분", walk:"도보 1분", slot:"쓰텐카쿠 후 15:00~15:40", time:"15:00", type:"food",
+      why:"쓰텐카쿠 구경 뒤 레트로 골목 노점에서 가볍게 간식. 저녁 20시 오마카세가 있으니 많이 먹지 말고 쿠시카츠 2~3개만.", map:"ジャンジャン横丁 大阪", ll:[34.64979, 135.50609]},
+    {id:"r3c", day:"d3", title:"덴노지 동물원", place:"天王寺動物園", area:"텐시바 공원 안 · 하루카스 도보 5분", walk:"도보 5분", slot:"15:40~16:20", time:"15:40", type:"spot",
+      why:"9:30~17시, 입장 500엔. 하루카스 야경 16:30 전에 1시간이면 충분하고 겨울에 북극곰·펭귄이 활발해요. 텐시바 마켓과 바로 이어져요.", map:"天王寺動物園", ll:[34.65110, 135.50843]},
+    {id:"r3d", day:"d3", title:"아베노 큐즈몰", place:"あべのキューズモール", area:"하루카스 바로 옆 연결통로", walk:"도보 2분", slot:"야경 전 16:20~16:30", time:"16:20", type:"shop",
+      why:"하루카스 입장 전 화장실·따뜻한 음료 정리하기 좋은 대형 몰. 야경 후 저녁 20시까지 시간이 남으면 여기서 쇼핑으로 채울 수 있어요.", map:"あべのキューズモール", ll:[34.64533, 135.51168]},
+
+    // 4일차 · 오사카성 → 우메다
+    {id:"r4a", day:"d4", title:"그랜드프런트 오사카", place:"グランフロント大阪", area:"오사카역·우메다역 지하 직결", walk:"도보 2분", slot:"우메다 도착 후 14:40~16:00", time:"14:40", type:"shop",
+      why:"14시 30분 우메다 도착, 저녁 18시까지 3시간 반이 남아요. 비·추위를 피해 실내에서 쇼핑하고 카페에서 쉬기 좋고 우메다역과 지하로 바로 이어져요.", map:"グランフロント大阪", ll:[34.70383, 135.49493]},
+    {id:"r4b", day:"d4", title:"HEP FIVE 관람차", place:"HEP FIVE 観覧車", area:"우메다 · 한큐우메다역 도보 3분", walk:"도보 3분", slot:"16:00~16:30", time:"16:00", type:"spot",
+      why:"빨간 관관차가 우메다 한복판 건물 위에 있어요. 1회 600엔, 15분이면 끝나서 다음 코스로 넘어가기 좋아요.", map:"HEP FIVE 観覧車", ll:[34.70407, 135.50009]},
+    {id:"r4c", day:"d4", title:"우메다 스카이빌딩 공중정원", place:"梅田スカイビル 空中庭園", area:"우메다역 도보 9분", walk:"도보 9분", slot:"해질녘 16:30~17:40", time:"16:30", type:"spot",
+      why:"해 지기 전후에 올라가면 노을과 야경을 한 번에 봐요. 옥상이라 따뜻하게 입고, 17시 40분엔 내려와 저녁 18시 고리쨩으로 이동하면 여유 있어요.", map:"梅田スカイビル 空中庭園", ll:[34.70544, 135.49033]},
+    {id:"r4d", day:"d4", title:"나카노시마 공원 일루미네이션", place:"中之島公園 · 大阪光のルネサンス", area:"나카노시마 · 요도야바시역 도보 3분", walk:"도보 3분", slot:"저녁 후 20:10~21:00", time:"20:10", type:"spot",
+      why:"20시 30분 빛의 르네상스와 같은 구역이라 저녁 식사 후 20시에 먼저 와 강변을 걸으면 조명이 가장 예쁜 시간대를 온전히 볼 수 있어요.", map:"中之島公園 大阪", ll:[34.69284, 135.50712]},
+
+    // 5일차 · 난바 → 우메다 → 공항
+    {id:"r5a", day:"d5", title:"에비스바시 글리코 사인", place:"戎橋 · グリコサイン", area:"난바 · 숙소에서 도보 10분", walk:"도보 10분", slot:"체크아웃 후 10:00~10:20", time:"10:00", type:"spot",
+      why:"출발 전 마지막 기념사진. 이 시간대는 사람이 적고, 사진 찍고 바로 도구야스지 골목으로 걸어갈 수 있어요.", map:"戎橋 グリコサイン", ll:[34.66892, 135.50107]},
+    {id:"r5b", day:"d5", title:"센니치마에 도구야스지", place:"千日前道具屋筋商店街", area:"난바역 도보 3분", walk:"도보 3분", slot:"10:20~10:55", time:"10:20", type:"shop",
+      why:"점심 11시 30분까지 1시간 반이 비어요. 주방용품·식칼·모형 음식 등 일본스러운 기념품이 많고 골목이 짧아 30분이면 충분해요.", map:"千日前道具屋筋商店街", ll:[34.66401, 135.50351]},
+    {id:"r5c", day:"d5", title:"난바CITY 지하 식품관", place:"なんばCITY", area:"난바역 직결", walk:"도보 1분", slot:"10:55~11:20", time:"10:55", type:"shop",
+      why:"짐을 맡겼다면 마지막 쇼핑은 여기서. 지하 식품관에서 기념품 과자를 사기 좋고 비 오는 날도 젖지 않게 다닐 수 있어요(北新地까지 두 정거장).", map:"なんばCITY 大阪", ll:[34.66270, 135.50207]},
+    {id:"r5d", day:"d5", title:"한큐우메다 백화점 지하", place:"阪急うめだ本店", area:"우메다역 직결 · 北新地까지 도보 10분", walk:"도보 10분", slot:"난바를 건너뛸 때 10:40~11:20", time:"10:40", type:"shop",
+      why:"난바 쇼핑을 포기하고 바로 우메다로 갔다면 이 코스. 지하 1층 식품관에서 도시락·과자를 사고 北新地 epais까지 걸어가면 11시 30분 점심에 맞아요.", map:"阪急うめだ本店", ll:[34.70282, 135.49853]}
+  ];
+
+  function coordsOf(it){
+    if (!it) return null;
+    if (Array.isArray(it.ll) && it.ll.length === 2 && isFinite(it.ll[0]) && isFinite(it.ll[1])) return it.ll;
+    if (it.map && COORDS[it.map]) return COORDS[it.map];
+    if (it.place && COORDS[it.place]) return COORDS[it.place];
+    return null;
+  }
 
   const DEFAULT_ITEMS = [
     // ── 1일차 ──
@@ -554,7 +773,7 @@
   const PLACE_GROUPS = {stay:"숙소", eat:"식당", see:"명소 · 쇼핑"};
   const PLACE_COLORS = {stay:"#39456A", eat:"#C0462F", see:"#2F6A5A"};
 
-  let state, ui = {tab:"timeline", day:"d1", editing:null};
+  let state, ui = {tab:"timeline", day:"d1", recDay:"all", mapFocus:null, editing:null};
 
   /* ── helpers ── */
   const $ = (s, r) => (r||document).querySelector(s);
@@ -690,6 +909,287 @@
     }
     renderDaybar();
     renderHeader();
+    renderMap(day);
+  }
+
+  /* ── day route map ── */
+  let mapObj = null, mapLayer = null;
+
+  function currentDay(){
+    return DAYS.find(d => d.id === ui.day) || DAYS[0];
+  }
+
+  function haversine(a, b){
+    const R = 6371, dLat = (b[0]-a[0]) * Math.PI/180, dLng = (b[1]-a[1]) * Math.PI/180;
+    const s = Math.sin(dLat/2)**2 + Math.cos(a[0]*Math.PI/180) * Math.cos(b[0]*Math.PI/180) * Math.sin(dLng/2)**2;
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(s)));
+  }
+
+  // 같은 좌표에 있는 일정은 하나의 스톱으로 묶음
+  function stopsOfDay(dayId){
+    const stopList = [], index = {};
+    state.items.filter(i => i.day === dayId).forEach(it => {
+      const ll = coordsOf(it);
+      if (!ll) return;
+      const k = ll[0].toFixed(4) + "," + ll[1].toFixed(4);
+      if (index[k]) { index[k].items.push(it); return; }
+      const s = {ll: ll, items: [it]};
+      index[k] = s; stopList.push(s);
+    });
+    return stopList;
+  }
+
+  // 하루 동선을 도시 단위로 나눠서 볼 수 있게 한다 (오사카↔교토처럼 멀리 떨어진 구간)
+  const CITY_POINTS = [
+    {name: "오사카", ll: [34.6937, 135.5023]},
+    {name: "교토", ll: [35.0116, 135.7681]},
+    {name: "간사이공항", ll: [34.4347, 135.2328]}
+  ];
+
+  function cityName(ll){
+    let best = "기타", bd = Infinity;
+    CITY_POINTS.forEach(c => { const d = haversine(ll, c.ll); if (d < bd){ bd = d; best = c.name; } });
+    return best;
+  }
+
+  function clustersOf(stops){
+    if (!stops.length) return [];
+    const groups = [[stops[0]]];
+    for (let i = 1; i < stops.length; i++){
+      if (haversine(stops[i - 1].ll, stops[i].ll) > 12) groups.push([stops[i]]);
+      else groups[groups.length - 1].push(stops[i]);
+    }
+    return groups.map(g => {
+      const lat = g.reduce((a, s) => a + s.ll[0], 0) / g.length;
+      const lng = g.reduce((a, s) => a + s.ll[1], 0) / g.length;
+      return {stops: g, ll: [lat, lng], name: cityName([lat, lng])};
+    });
+  }
+
+  function initMap(){
+    if (mapObj || typeof L === "undefined") return mapObj;
+    const el = document.getElementById("map");
+    if (!el) return null;
+    mapObj = L.map(el, {zoomControl: true, scrollWheelZoom: false, attributionControl: true});
+    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(mapObj);
+    mapObj.setView([34.69, 135.55], 11);
+    return mapObj;
+  }
+
+  function drawMap(stops){
+    if (typeof L === "undefined") return;
+    const m = initMap();
+    if (!m) return;
+    m.invalidateSize();
+    if (m.getSize().y < 60) return;  // 접히는 중이면 펼친 뒤에 그린다
+    if (mapLayer){ m.removeLayer(mapLayer); mapLayer = null; }
+    mapLayer = L.layerGroup().addTo(m);
+
+    const latlngs = stops.map(s => s.ll);
+    if (latlngs.length > 1){
+      L.polyline(latlngs, {color: "#E05B45", weight: 3, opacity: .85, lineJoin: "round", lineCap: "round"}).addTo(mapLayer);
+    }
+
+    const markers = stops.map((s, i) => {
+      const cls = "pin" + (i === 0 ? " a" : (i === stops.length - 1 && stops.length > 1 ? " z" : ""));
+      const icon = L.divIcon({className: "", html: '<div class="' + cls + '">' + (i + 1) + '</div>', iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -15]});
+      const head = s.items[0];
+      const rows = s.items.map(it => '<div class="pp-row">'
+        + (it.time ? '<span class="pp-time">' + esc(it.time) + '</span> ' : '')
+        + esc(it.title) + '</div>').join("");
+      const marker = L.marker(s.ll, {icon: icon, title: head.title, riseOnHover: true, keyboard: false});
+      marker.bindPopup('<b>' + esc(head.title) + '</b>' + rows, {closeButton: false, autoPanPadding: [20, 20]});
+      marker.addTo(mapLayer);
+      return marker;
+    });
+
+    if (latlngs.length === 1) m.setView(latlngs[0], 15);
+    else m.fitBounds(L.latLngBounds(latlngs), {padding: [26, 26], maxZoom: 16});
+
+    // 확대 애니메이션이 끝난 뒤에 핀 간격을 조정한다
+    drawToken++;
+    const token = drawToken;
+    clearTimeout(spaceTimer);
+    spaceTimer = setTimeout(() => {
+      if (token !== drawToken) return;
+      spacePins(m, stops, markers, latlngs);
+    }, 420);
+  }
+
+  let drawToken = 0, spaceTimer = null, dotLayer = null;
+
+  // 겹치는 핀은 번호 순서대로 바깥으로 밀어내고, 원래 자리에 작은 점을 찍어 위치를 알린다
+  function spacePins(m, stops, markers, latlngs){
+    if (typeof L === "undefined" || !mapLayer) return;
+    if (dotLayer){ m.removeLayer(dotLayer); dotLayer = null; }
+    dotLayer = L.layerGroup().addTo(m);
+
+    const pts = stops.map(s => m.latLngToContainerPoint(s.ll));
+    const off = pts.map(() => [0, 0]);
+    const placed = [];
+    const far = (a, b) => Math.hypot(a[0] - b[0], a[1] - b[1]) >= 27;
+    pts.forEach((p, i) => {
+      let pos = [p.x, p.y];
+      if (placed.some(q => !far(q, pos))){
+        let found = null;
+        for (let R = 25; R <= 90 && !found; R += 7){
+          for (let a = 0; a < 16; a++){
+            const ang = (Math.PI / 8) * a + i * 0.37;
+            const cand = [p.x + Math.cos(ang) * R, p.y + Math.sin(ang) * R];
+            if (placed.every(q => far(q, cand))){ found = cand; break; }
+          }
+        }
+        if (found) pos = found;
+      }
+      off[i] = [pos[0] - p.x, pos[1] - p.y];
+      placed.push(pos);
+    });
+
+    off.forEach((o, i) => {
+      const el = markers[i].getElement();
+      if (!el) return;
+      if (Math.abs(o[0]) < 1 && Math.abs(o[1]) < 1){
+        el.style.marginLeft = "-13px"; el.style.marginTop = "-13px";
+        return;
+      }
+      el.style.marginLeft = (o[0] - 13).toFixed(1) + "px";
+      el.style.marginTop = (o[1] - 13).toFixed(1) + "px";
+      L.polyline([latlngs[i], m.containerPointToLatLng([pts[i].x + o[0], pts[i].y + o[1]])],
+        {color: "#E05B45", weight: 1, opacity: .55}).addTo(dotLayer);
+      L.circleMarker(stops[i].ll, {radius: 2.5, color: "#fff", weight: 1, fillColor: "#E05B45", fillOpacity: .9}).addTo(dotLayer);
+    });
+  }
+
+  function renderMap(day){
+    const meta = $("#mapMeta");
+    if (!meta) return;
+    const stops = stopsOfDay(day.id);
+    $("#mapTitle").textContent = day.n + "일차 동선 지도";
+    if (typeof L === "undefined"){
+      meta.textContent = "지도를 불러오지 못했어요 (인터넷 연결 확인)";
+      $("#mapBox").style.display = "none";
+      $("#mapChips").classList.remove("show");
+      return;
+    }
+    $("#mapBox").style.display = "";
+    if (!stops.length){
+      meta.textContent = "지도에 표시할 장소가 아직 없어요";
+      $("#mapChips").classList.remove("show");
+      return;
+    }
+
+    const clusters = clustersOf(stops);
+    let focus = ui.mapFocus;
+    if (clusters.length < 2) focus = "all";
+    else if (focus === "all") { /* 그대로 */ }
+    else if (!(focus >= 1 && focus <= clusters.length)){
+      // 기본은 가장 많은 장소가 모인 동네
+      let big = 0;
+      clusters.forEach((c, i) => { if (c.stops.length > clusters[big].stops.length) big = i; });
+      focus = big + 1;
+    }
+
+    const view = focus === "all" ? stops : clusters[focus - 1].stops;
+    let dist = 0;
+    for (let i = 1; i < view.length; i++) dist += haversine(view[i - 1].ll, view[i].ll);
+    const distTxt = dist < 1 ? Math.round(dist * 1000) + "m" : dist.toFixed(1) + "km";
+    const head = (clusters.length > 1 && focus !== "all" ? clusters[focus - 1].name + " " : "") + view.length + "곳";
+    meta.textContent = head + " · 직선 약 " + distTxt;
+
+    const chips = $("#mapChips");
+    if (clusters.length > 1){
+      chips.classList.add("show");
+      chips.innerHTML = '<button class="mchip ' + (focus === "all" ? "on" : "") + '" data-mapfocus="all">전체 동선</button>'
+        + clusters.map((c, i) => '<button class="mchip ' + (focus === (i + 1) ? "on" : "") + '" data-mapfocus="' + (i + 1) + '">' + esc(c.name) + ' ' + c.stops.length + '곳</button>').join("");
+    } else {
+      chips.classList.remove("show");
+      chips.innerHTML = "";
+    }
+    if ($("#mapcard").classList.contains("open")) drawMap(view);
+  }
+
+  function setMapOpen(open){
+    const card = $("#mapcard");
+    card.classList.toggle("open", open);
+    $("#mapChev").textContent = open ? "접기" : "펼치기";
+    $("#mapToggle").setAttribute("aria-expanded", open ? "true" : "false");
+    if (open){
+      setTimeout(() => { renderMap(currentDay()); }, 300);
+    }
+  }
+
+  /* ── 남는 시간 · 주변 추천 ── */
+  function isRecAdded(recId){
+    return state.items.some(i => i.recId === recId);
+  }
+
+  function renderRecs(){
+    const filter = ui.recDay || "all";
+    const chips = [{id: "all", label: "전체"}].concat(DAYS.map(d => ({id: d.id, label: d.n + "일차"})));
+    $("#recbar").innerHTML = chips.map(c =>
+      '<button class="chip ' + (filter === c.id ? "on" : "") + '" data-recday="' + c.id + '">' + c.label + '</button>').join("");
+
+    const days = DAYS.filter(d => filter === "all" || d.id === filter);
+    const shown = RECS.filter(r => days.some(d => d.id === r.day));
+    $("#recCount").textContent = shown.length + "개 코스";
+
+    const pinSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6.4-6.3 6.4-11A6.4 6.4 0 0 0 5.6 10c0 4.7 6.4 11 6.4 11z"/><circle cx="12" cy="9.9" r="2"/></svg>';
+
+    $("#recsWrap").innerHTML = days.map(d => {
+      const list = RECS.filter(r => r.day === d.id);
+      if (!list.length) return "";
+      return '<div class="recgroup-head"><h2>' + d.n + '일차 <em>' + d.date + ' (' + d.wd + ')</em></h2><span>' + esc(d.tagline) + '</span></div>'
+        + list.map((r, idx) => {
+            const added = isRecAdded(r.id);
+            return '<article class="reccard">'
+              + '<div class="rc-top"><span class="rc-num">' + (idx + 1) + '</span><div style="flex:1;min-width:0">'
+                + '<h3>' + esc(r.title) + '</h3>'
+                + '<p class="rc-area">' + esc(r.area) + '</p>'
+              + '</div></div>'
+              + '<div class="rc-meta">'
+                + '<span class="rc-tag slot">' + esc(r.slot) + '</span>'
+                + '<span class="rc-tag">' + esc(r.walk) + '</span>'
+              + '</div>'
+              + '<p class="rc-why">' + esc(r.why) + '</p>'
+              + '<div class="rc-actions">'
+                + '<a class="rc-map" href="' + mapUrl(r.map) + '" target="_blank" rel="noopener noreferrer">' + pinSvg + '지도</a>'
+                + '<button class="rc-add ' + (added ? "added" : "") + '" data-act="recAdd" data-rec="' + r.id + '"' + (added ? " disabled" : "") + '>'
+                  + (added ? "✓ " + d.n + "일차 추가됨" : "+ " + d.n + "일차 일정에 추가")
+                + '</button>'
+              + '</div></article>';
+          }).join("");
+    }).join("") || '<p class="empty" style="padding:20px 0">추천이 없어요.</p>';
+  }
+
+  function addRecToDay(recId){
+    const r = RECS.find(x => x.id === recId);
+    if (!r || isRecAdded(recId)) return;
+    const day = DAYS.find(d => d.id === r.day) || DAYS[0];
+    const item = {
+      id: uid(), day: r.day, done: false, recId: r.id,
+      time: r.time || "", type: r.type || "spot",
+      title: r.title, place: r.place, note: r.why, map: r.map, ll: r.ll.slice()
+    };
+    const toMin = t => { const m = /^(\d{1,2}):(\d{2})/.exec(t || ""); return m ? (+m[1]) * 60 + (+m[2]) : 99999; };
+    const target = toMin(item.time);
+    let insertAt = -1;
+    state.items.forEach((it, idx) => {
+      if (insertAt >= 0 || it.day !== r.day) return;
+      if (toMin(it.time) > target) insertAt = idx;
+    });
+    if (insertAt < 0){
+      let last = -1;
+      state.items.forEach((it, idx) => { if (it.day === r.day) last = idx; });
+      insertAt = last >= 0 ? last + 1 : state.items.length;
+    }
+    state.items.splice(insertAt, 0, item);
+    save();
+    toast(day.n + "일차 일정에 추가했어요");
+    renderRecs();
+    renderTimeline();
   }
 
   /* ── places ── */
@@ -797,6 +1297,7 @@
       + '<div class="field"><label>제목</label><input id="fTitle" type="text" placeholder="예: 저녁 야키토리" value="' + esc(it ? it.title : "") + '"></div>'
       + '<div class="field"><label>장소 (한국어 · 일본어)</label><input id="fPlace" type="text" placeholder="예: 焼肉ごりちゃん 梅田本店" value="' + esc(it ? it.place : "") + '"></div>'
       + '<div class="field"><label>지도 검색어</label><input id="fMap" type="text" placeholder="비우면 장소로 검색" value="' + esc(it ? it.map : "") + '"></div>'
+      + '<div class="field"><label>좌표 (선택 · 동선 지도에 표시)</label><input id="fLL" type="text" placeholder="예: 34.7025, 135.4959" value="' + esc(it && Array.isArray(it.ll) ? it.ll.join(", ") : "") + '"></div>'
       + '<div class="field"><label>메모</label><textarea id="fNote" placeholder="예약 시간, 가격, 같이 가고 싶은 것…">' + esc(it ? it.note : "") + '</textarea></div>'
       + '<div class="sheet-actions">'
         + (it ? '<button class="danger" id="fDelete">삭제</button>' : '')
@@ -818,12 +1319,23 @@
       map: ($("#fMap").value || "").trim(),
       note: ($("#fNote").value || "").trim()
     };
+    const llRaw = (($("#fLL") || {}).value || "").trim();
+    let ll = null;
+    if (llRaw){
+      const parts = llRaw.split(/[,\s]+/).map(Number);
+      if (parts.length === 2 && isFinite(parts[0]) && isFinite(parts[1])) ll = parts;
+    }
     if (e.id){
       const it = state.items.find(i => i.id === e.id);
-      if (it) Object.assign(it, data);
+      if (it){
+        Object.assign(it, data);
+        if (ll) it.ll = ll; else delete it.ll;
+      }
       toast("수정했어요");
     } else {
-      state.items.push({id:uid(), day:e.day, done:false, ...data});
+      const item = {id:uid(), day:e.day, done:false, ...data};
+      if (ll) item.ll = ll;
+      state.items.push(item);
       toast("일정을 추가했어요");
     }
     save();
@@ -847,12 +1359,13 @@
   /* ── events ── */
   function setTab(tab){
     ui.tab = tab;
-    ["timeline","places","check","money"].forEach(t => {
+    ["timeline","places","recs","check","money"].forEach(t => {
       $("#view-" + t).classList.toggle("hidden", t !== tab);
     });
     document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.tab === tab));
     if (tab === "timeline") renderTimeline();
     if (tab === "places") renderPlaces();
+    if (tab === "recs") renderRecs();
     if (tab === "check") renderCheck();
     if (tab === "money") renderMoney();
     window.scrollTo({top:0, behavior:"auto"});
@@ -866,7 +1379,34 @@
     const p = ev.target.closest("[data-day]");
     if (!p) return;
     ui.day = p.dataset.day;
+    ui.mapFocus = null;
     renderTimeline();
+  });
+
+  $("#mapChips").addEventListener("click", ev => {
+    const c = ev.target.closest("[data-mapfocus]");
+    if (!c) return;
+    ui.mapFocus = c.dataset.mapfocus === "all" ? "all" : Number(c.dataset.mapfocus);
+    renderMap(currentDay());
+  });
+
+  // 동선 지도 접기/펼치기
+  $("#mapToggle").addEventListener("click", () => {
+    setMapOpen(!$("#mapcard").classList.contains("open"));
+  });
+
+  // 추천 탭
+  $("#recbar").addEventListener("click", ev => {
+    const c = ev.target.closest("[data-recday]");
+    if (!c) return;
+    ui.recDay = c.dataset.recday;
+    renderRecs();
+  });
+
+  $("#recsWrap").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-act='recAdd']");
+    if (!b) return;
+    addRecToDay(b.dataset.rec);
   });
 
   $("#timelineList").addEventListener("click", ev => {
@@ -1017,6 +1557,7 @@
   function renderAll(){
     renderTimeline();
     renderPlaces();
+    renderRecs();
     renderCheck();
     renderMoney();
   }
