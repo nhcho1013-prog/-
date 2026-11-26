@@ -1,5 +1,7 @@
 # 오사카 · 교토 여행 (2026.12.13 – 12.17)
 
+**지금 바로 열기 → https://nhcho1013-prog.github.io/-/**
+
 아이폰에서 앱처럼 쓰는 5일 여행 일정 웹앱. 빌드 없이 `index.html` 하나로 동작해요.
 
 ## 파일
@@ -12,7 +14,7 @@
 
 ## 여는 방법
 
-- **아이폰 (지금 쓰는 방법)**: Safari로 이 저장소의 Pages 주소를 연 뒤 **공유 → 홈 화면에 추가**. 주소창 없이 앱처럼 실행됩니다.
+- **아이폰 (지금 쓰는 방법)**: Safari로 https://nhcho1013-prog.github.io/-/ 를 연 뒤 **공유 → 홈 화면에 추가**. 주소창 없이 앱처럼 실행됩니다.
 - **무료 호스팅**: 이 폴더를 그대로 GitHub Pages, Vercel, Netlify에 올리면 끝 (빌드 설정 없음).
   - GitHub: 저장소에 폴더를 올리고 Settings → Pages → Branch를 `main` / root로 지정.
 - **PC에서 미리보기**: `python3 -m http.server` 로 폴더를 열고 브라우저에서 확인.
