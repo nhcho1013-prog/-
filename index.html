@@ -350,7 +350,7 @@
   .mchip.on{background:var(--indigo);border-color:var(--indigo);color:#fff}
   #mapBox{height:0;overflow:hidden;transition:height .24s cubic-bezier(.32,.72,0,1)}
   .mapcard.open #mapBox{height:238px}
-  #map{width:100%;height:238px;background:#EFE8DD}
+  #map{width:100%;height:238px;background:#EFE8DD;isolation:isolate}
   .mapfoot{display:flex;justify-content:space-between;gap:8px;padding:7px 12px 9px;font-size:10.5px;color:#A39C92;border-top:1px solid #F6F0E8}
   .leaflet-container{font-family:inherit;background:#EFE8DD}
   .leaflet-tile{filter:saturate(.82) contrast(.98) brightness(1.02)}
@@ -368,6 +368,83 @@
   .leaflet-popup-content b{display:block;font-size:12.5px;margin-bottom:3px;letter-spacing:-0.01em}
   .leaflet-popup-content .pp-row{color:var(--sub);font-size:11.5px}
   .leaflet-popup-content .pp-time{color:var(--accent);font-weight:800;font-size:11.5px}
+
+  /* ── 지도 핀 정보 카드 (구글맵식 하단 시트) ── */
+  .pin{transition:transform .16s ease, box-shadow .16s ease}
+  .pin.sel{
+    transform:scale(1.22);
+    box-shadow:0 0 0 4px rgba(224,91,69,.26), 0 6px 16px rgba(60,40,24,.42);
+    z-index:999;
+  }
+  .pin.sel.a{box-shadow:0 0 0 4px rgba(44,54,84,.24), 0 6px 16px rgba(60,40,24,.42)}
+  .pin.sel.z{box-shadow:0 0 0 4px rgba(62,124,107,.26), 0 6px 16px rgba(60,40,24,.42)}
+  .pinfo{
+    position:fixed;left:0;right:0;
+    bottom:calc(var(--tab-h) + env(safe-area-inset-bottom, 0px));
+    z-index:47;
+    background:#FFFDF9;
+    border-radius:20px 20px 0 0;
+    border-top:1px solid #F1E6D8;
+    box-shadow:0 -10px 34px rgba(50,38,24,.16);
+    padding:8px 16px 12px;
+    transform:translateY(calc(100% + 16px));
+    transition:transform .28s cubic-bezier(.32,.72,0,1);
+    visibility:hidden;
+    max-height:56vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  }
+  .pinfo.show{transform:translateY(0);visibility:visible}
+  .pi-grab{width:36px;height:4px;border-radius:99px;background:#E7DCCE;margin:0 auto 10px}
+  .pi-head{display:flex;align-items:flex-start;gap:9px}
+  .pi-num{
+    width:26px;height:26px;border-radius:50%;flex:0 0 auto;margin-top:1px;
+    background:var(--accent);color:#fff;display:grid;place-items:center;
+    font-size:12px;font-weight:800;font-variant-numeric:tabular-nums;
+    border:2px solid #fff;box-shadow:0 3px 8px rgba(224,91,69,.28);
+  }
+  .pi-num.a{background:var(--indigo);box-shadow:0 3px 8px rgba(44,54,84,.26)}
+  .pi-num.z{background:var(--mint);box-shadow:0 3px 8px rgba(62,124,107,.26)}
+  .pi-titles{flex:1;min-width:0}
+  .pi-titles b{display:block;font-size:15.5px;font-weight:800;letter-spacing:-0.03em;line-height:1.3}
+  .pi-titles small{display:block;margin-top:2px;font-size:12px;color:#77716A;font-weight:650;letter-spacing:-0.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pi-titles small.pi-area{margin-top:1px;font-size:11px;color:#9A938A;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pi-x{
+    width:28px;height:28px;border-radius:50%;flex:0 0 auto;margin-top:-2px;
+    display:grid;place-items:center;background:#F4EFE8;color:#77716A;
+    font-size:13px;line-height:1;font-weight:700;
+  }
+  .pi-x:active{background:#EAE2D7}
+  .pi-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .pi-time{font-size:12px;font-weight:800;color:var(--indigo);font-variant-numeric:tabular-nums}
+  .pi-day{font-size:10.5px;font-weight:800;color:#8A8379;background:#F4EFE8;padding:2px 7px;border-radius:6px;letter-spacing:-0.01em}
+  .pi-note{
+    margin-top:8px;font-size:12.5px;color:#7C766D;line-height:1.5;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+  }
+  .pi-items{margin:8px 0 0;padding:8px 0 0;border-top:1px dashed #EFE6DA;display:flex;flex-direction:column;gap:4px}
+  .pi-items li{display:flex;gap:8px;list-style:none;font-size:12.5px;color:#5F5A53;font-weight:650;line-height:1.35}
+  .pi-items li span{flex:0 0 auto;min-width:32px;color:var(--indigo);font-weight:800;font-variant-numeric:tabular-nums}
+  .pi-actions{display:flex;align-items:center;gap:7px;margin-top:11px}
+  .pi-nav{
+    width:38px;height:38px;border-radius:12px;flex:0 0 auto;
+    border:1px solid #E9DFD2;background:#fff;color:#5B564F;display:grid;place-items:center;
+  }
+  .pi-nav svg{width:16px;height:16px}
+  .pi-nav:disabled{opacity:.32}
+  .pi-nav:active:not(:disabled){background:#F7F2EA}
+  .pi-map{
+    flex:1 1 auto;display:flex;align-items:center;justify-content:center;gap:5px;
+    height:38px;border-radius:12px;background:var(--indigo);color:#fff;
+    font-size:13px;font-weight:800;letter-spacing:-0.02em;white-space:nowrap;
+    box-shadow:0 5px 14px rgba(44,54,84,.22);
+  }
+  .pi-map:active{background:#3A4668}
+  .pi-map svg{width:14px;height:14px;flex:0 0 auto}
+  .pi-see{
+    flex:0 0 auto;height:38px;padding:0 12px;border-radius:12px;
+    background:#FBEDE7;color:#C0462F;font-size:12.5px;font-weight:800;white-space:nowrap;
+  }
+  .pi-see:active{background:#F7E0D9}
+  .item.flash{background:#FFF8F4;border-color:#F0C4B5;box-shadow:0 0 0 2px rgba(224,91,69,.18), var(--shadow)}
 
   /* ── recommendations ── */
   .recbar{display:flex;gap:6px;padding:14px 14px 2px;overflow-x:auto;scrollbar-width:none}
@@ -461,7 +538,7 @@
       </button>
       <div class="mapchips" id="mapChips"></div>
       <div id="mapBox"><div id="map"></div></div>
-      <div class="mapfoot"><span>번호 순서대로 이동 동선</span><span>핀을 누르면 장소·시간</span></div>
+      <div class="mapfoot"><span>번호 순서대로 이동 동선</span><span>핀을 누르면 장소 정보</span></div>
     </div>
     <div class="list" id="timelineList"></div>
     <button class="addbtn" id="addItem">＋ 이 날 일정 추가</button>
@@ -568,6 +645,7 @@
   </button>
 </nav>
 
+<div class="pinfo" id="pinfo" role="dialog" aria-label="핀 장소 정보" aria-hidden="true"></div>
 <div class="backdrop hidden" id="backdrop"></div>
 <div class="sheet" id="sheet" aria-hidden="true"></div>
 <div class="toast" id="toast"></div>
@@ -976,6 +1054,7 @@
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(mapObj);
     mapObj.setView([34.69, 135.55], 11);
+    mapObj.on("click", () => closePinInfo());
     return mapObj;
   }
 
@@ -993,18 +1072,18 @@
       L.polyline(latlngs, {color: "#E05B45", weight: 3, opacity: .85, lineJoin: "round", lineCap: "round"}).addTo(mapLayer);
     }
 
+    closePinInfo();
+    pinView = stops;
     const markers = stops.map((s, i) => {
       const cls = "pin" + (i === 0 ? " a" : (i === stops.length - 1 && stops.length > 1 ? " z" : ""));
-      const icon = L.divIcon({className: "", html: '<div class="' + cls + '">' + (i + 1) + '</div>', iconSize: [26, 26], iconAnchor: [13, 13], popupAnchor: [0, -15]});
+      const icon = L.divIcon({className: "", html: '<div class="' + cls + '">' + (i + 1) + '</div>', iconSize: [26, 26], iconAnchor: [13, 13]});
       const head = s.items[0];
-      const rows = s.items.map(it => '<div class="pp-row">'
-        + (it.time ? '<span class="pp-time">' + esc(it.time) + '</span> ' : '')
-        + esc(it.title) + '</div>').join("");
       const marker = L.marker(s.ll, {icon: icon, title: head.title, riseOnHover: true, keyboard: false});
-      marker.bindPopup('<b>' + esc(head.title) + '</b>' + rows, {closeButton: false, autoPanPadding: [20, 20]});
+      marker.on("click", () => selectPin(i));
       marker.addTo(mapLayer);
       return marker;
     });
+    pinMarks = markers;
 
     if (latlngs.length === 1) m.setView(latlngs[0], 15);
     else m.fitBounds(L.latLngBounds(latlngs), {padding: [26, 26], maxZoom: 16});
@@ -1063,6 +1142,123 @@
     });
   }
 
+  /* ── 지도 핀 정보 카드 ── */
+  let pinView = [], pinMarks = [], pinIdx = -1;
+
+  const PI_CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg>';
+  const PI_CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"/></svg>';
+  const PI_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6.4-6.3 6.4-11A6.4 6.4 0 0 0 5.6 10c0 4.7 6.4 11 6.4 11z"/><circle cx="12" cy="9.9" r="2"/></svg>';
+
+  // 일정 항목 → 장소 탭 정보(일본어 이름·주소) 찾기
+  function placeInfoOf(it){
+    if (!it) return null;
+    const key = it.map || it.place;
+    if (key){
+      const hit = PLACES.find(p => p.map === key);
+      if (hit) return hit;
+    }
+    if (it.place){
+      const hit2 = PLACES.find(p => p.ja && it.place.indexOf(p.ja) >= 0);
+      if (hit2) return hit2;
+    }
+    return null;
+  }
+
+  function pinCardHtml(stop, i){
+    const day = currentDay();
+    const head = stop.items[0];
+    const info = placeInfoOf(head);
+    const last = pinView.length - 1;
+    const cls = i === 0 ? " a" : (i === last && last > 0 ? " z" : "");
+    const placeTxt = head.place || "";
+    const ja = info && info.ja ? info.ja : "";
+    const jaSame = ja && (placeTxt.indexOf(ja) >= 0 || placeTxt.toLowerCase().indexOf(ja.split(/[\s(（]/)[0].toLowerCase()) === 0);
+    const sub = [placeTxt, (ja && !jaSame ? ja : "")].filter(Boolean).join(" · ");
+    const area = info && info.area ? info.area : "";
+    const q = head.map || head.place || head.title;
+    const gHref = q ? mapUrl(q) : "https://www.google.com/maps/search/?api=1&query=" + stop.ll[0] + "," + stop.ll[1];
+    const more = stop.items.length > 1
+      ? '<ul class="pi-items">' + stop.items.map(it => '<li>'
+          + '<span>' + (it.time ? esc(it.time) : "·") + '</span>' + esc(it.title) + '</li>').join("") + '</ul>'
+      : "";
+    return '<div class="pi-grab"></div>'
+      + '<div class="pi-head">'
+        + '<span class="pi-num' + cls + '">' + (i + 1) + '</span>'
+        + '<div class="pi-titles"><b>' + esc(head.title) + '</b>'
+          + (sub ? '<small>' + esc(sub) + '</small>' : '')
+          + (area ? '<small class="pi-area">' + esc(area) + '</small>' : '')
+        + '</div>'
+        + '<button class="pi-x" data-pi="close" aria-label="닫기">✕</button>'
+      + '</div>'
+      + '<div class="pi-meta">'
+        + '<span class="tag ' + esc(head.type || "spot") + '">' + (TYPES[head.type] || "일정") + '</span>'
+        + (head.time ? '<span class="pi-time">' + esc(head.time) + '</span>' : '')
+        + '<span class="pi-day">' + day.n + '일차 · ' + day.date + ' (' + day.wd + ')</span>'
+      + '</div>'
+      + (head.note ? '<p class="pi-note">' + esc(head.note) + '</p>' : '')
+      + more
+      + '<div class="pi-actions">'
+        + '<button class="pi-nav" data-pi="prev" aria-label="이전 장소"' + (i === 0 ? ' disabled' : '') + '>' + PI_CHEV_L + '</button>'
+        + '<a class="pi-map" href="' + gHref + '" target="_blank" rel="noopener noreferrer">' + PI_PIN + '구글맵 열기</a>'
+        + '<button class="pi-see" data-pi="see">일정 보기</button>'
+        + '<button class="pi-nav" data-pi="next" aria-label="다음 장소"' + (i === last ? ' disabled' : '') + '>' + PI_CHEV_R + '</button>'
+      + '</div>';
+  }
+
+  function selectPin(i){
+    if (!pinView.length || i < 0 || i >= pinView.length) return;
+    pinIdx = i;
+    pinMarks.forEach((m, k) => {
+      const wrap = m.getElement && m.getElement();
+      const el = wrap && wrap.querySelector(".pin");
+      if (el) el.classList.toggle("sel", k === i);
+      if (m.setZIndexOffset) m.setZIndexOffset(k === i ? 1200 : 0);
+    });
+    const card = $("#pinfo");
+    card.innerHTML = pinCardHtml(pinView[i], i);
+    card.setAttribute("aria-hidden", "false");
+    card.classList.add("show");
+    requestAnimationFrame(() => panPinIntoView(pinView[i].ll));
+  }
+
+  // 카드에 가리지 않도록 핀을 지도 안쪽으로 부드럽게 이동
+  function panPinIntoView(ll){
+    if (!mapObj) return;
+    const mapEl = document.getElementById("map");
+    if (!mapEl) return;
+    const mr = mapEl.getBoundingClientRect();
+    const card = $("#pinfo");
+    const tabbar = document.querySelector(".tabbar");
+    const tabH = tabbar ? tabbar.getBoundingClientRect().height : 60;
+    const cardTop = window.innerHeight - tabH - card.offsetHeight;
+    const overlap = Math.max(0, mr.bottom - cardTop);
+    const bottomPad = Math.max(30, Math.min(mr.height - 40, overlap + 26));
+    mapObj.panInside(ll, {paddingTopLeft: [28, 28], paddingBottomRight: [28, bottomPad], animate: true, duration: 0.3});
+  }
+
+  function closePinInfo(){
+    const card = $("#pinfo");
+    if (!card || !card.classList.contains("show")) return;
+    card.classList.remove("show");
+    card.setAttribute("aria-hidden", "true");
+    pinIdx = -1;
+    pinMarks.forEach(m => {
+      const wrap = m.getElement && m.getElement();
+      const el = wrap && wrap.querySelector(".pin");
+      if (el) el.classList.remove("sel");
+      if (m.setZIndexOffset) m.setZIndexOffset(0);
+    });
+  }
+
+  function focusListItem(id){
+    const el = document.querySelector('#timelineList .item[data-id="' + id + '"]');
+    if (!el) return;
+    el.scrollIntoView({behavior: "smooth", block: "center"});
+    el.classList.add("flash");
+    clearTimeout(focusListItem._t);
+    focusListItem._t = setTimeout(() => el.classList.remove("flash"), 1700);
+  }
+
   function renderMap(day){
     const meta = $("#mapMeta");
     if (!meta) return;
@@ -1118,6 +1314,8 @@
     $("#mapToggle").setAttribute("aria-expanded", open ? "true" : "false");
     if (open){
       setTimeout(() => { renderMap(currentDay()); }, 300);
+    } else {
+      closePinInfo();
     }
   }
 
@@ -1284,6 +1482,7 @@
   }
 
   function openItemSheet(dayId, itemId){
+    closePinInfo();
     const it = itemId ? state.items.find(i => i.id === itemId) : null;
     ui.editing = {day: dayId, id: itemId || null};
     const typeOpts = Object.keys(TYPES).map(k =>
@@ -1359,6 +1558,7 @@
   /* ── events ── */
   function setTab(tab){
     ui.tab = tab;
+    closePinInfo();
     ["timeline","places","recs","check","money"].forEach(t => {
       $("#view-" + t).classList.toggle("hidden", t !== tab);
     });
@@ -1482,7 +1682,22 @@
 
   $("#btnSettings").addEventListener("click", openSettings);
   $("#backdrop").addEventListener("click", closeSheet);
-  document.addEventListener("keydown", ev => { if (ev.key === "Escape") closeSheet(); });
+  document.addEventListener("keydown", ev => { if (ev.key === "Escape"){ closeSheet(); closePinInfo(); } });
+
+  // 핀 정보 카드 안의 버튼들
+  $("#pinfo").addEventListener("click", ev => {
+    const t = ev.target.closest("[data-pi]");
+    if (!t) return;
+    const act = t.dataset.pi;
+    if (act === "close") closePinInfo();
+    else if (act === "prev") selectPin(pinIdx - 1);
+    else if (act === "next") selectPin(pinIdx + 1);
+    else if (act === "see"){
+      const stop = pinView[pinIdx];
+      closePinInfo();
+      if (stop && stop.items[0]) focusListItem(stop.items[0].id);
+    }
+  });
 
   // checklist events (delegated)
   $("#checkWrap").addEventListener("click", ev => {
