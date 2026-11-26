@@ -452,6 +452,54 @@
     background:#FBEDE7;color:#C0462F;font-size:12.5px;font-weight:800;white-space:nowrap;
   }
   .pi-see:active{background:#F7E0D9}
+  .pi-dir{
+    display:flex;align-items:center;gap:8px;
+    margin-top:9px;height:40px;padding:0 11px;border-radius:12px;
+    background:var(--mint-soft);border:1px solid #CFE3DA;color:#2F6A5A;
+    font-size:12.5px;font-weight:800;letter-spacing:-0.02em;
+  }
+  .pi-dir:active{background:#DDEDE6}
+  .pi-dir svg{width:16px;height:16px;flex:0 0 auto}
+  .pi-dir span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .pi-dir small{flex:0 0 auto;font-size:10px;font-weight:800;color:#4E8474;background:#fff;border-radius:6px;padding:2px 6px}
+
+  /* ── 영업시간 배지 ── */
+  .hr-line{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin-top:7px}
+  .hrs{font-size:10.5px;font-weight:800;padding:2px 7px;border-radius:6px;letter-spacing:-0.01em;white-space:nowrap;line-height:1.5}
+  .hrs.hr-txt{background:var(--gray-soft);color:#5F5A53}
+  .hrs.hr-hol{background:#fff;border:1px solid #EADFD2;color:#8A8379}
+  .hrs.ok{background:var(--mint-soft);color:#2F6A5A}
+  .hrs.soon{background:var(--amber-soft);color:#96601B}
+  .hrs.no{background:var(--accent-soft);color:#C0462F}
+
+  /* ── 환율 계산기 ── */
+  .fx-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .fx-field{min-width:0}
+  .fx-field label{display:block;font-size:10.5px;font-weight:800;color:var(--sub);margin-bottom:4px}
+  .fx-input{display:flex;align-items:center;gap:4px;border:1px solid #E9DFD2;background:#fff;border-radius:11px;padding:0 10px;height:44px}
+  .fx-input span{font-size:13px;font-weight:800;color:#9A938A}
+  .fx-input input{flex:1;min-width:0;border:0;background:none;font-family:inherit;font-size:17px;font-weight:800;color:var(--ink);text-align:right;font-variant-numeric:tabular-nums;letter-spacing:-0.02em}
+  .fx-input input:focus{outline:none}
+  .fx-input:focus-within{border-color:#D9B7A8}
+  .fx-rate{display:flex;align-items:center;gap:6px;margin-top:10px;font-size:11.5px;font-weight:800;color:var(--sub)}
+  .fx-rate input{width:70px;border:1px solid #E9DFD2;border-radius:8px;padding:5px 7px;font-family:inherit;font-size:16px;font-weight:800;color:var(--ink);text-align:right;background:#fff;font-variant-numeric:tabular-nums}
+  .fx-rate input:focus{outline:none;border-color:#D9B7A8}
+  .fx-rate button{margin-left:auto;font-size:10.5px;font-weight:800;color:#C0462F;background:var(--accent-soft);border-radius:99px;padding:5px 10px}
+  .fx-presets{display:flex;gap:5px;margin-top:10px;overflow-x:auto;scrollbar-width:none}
+  .fx-presets::-webkit-scrollbar{display:none}
+  .fx-presets button{flex:0 0 auto;font-size:11px;font-weight:800;color:#5F5A53;background:#F5F1EB;border:1px solid #E9E0D4;border-radius:999px;padding:5px 10px}
+  .fx-presets button:active{background:#EFE8DD}
+  .fx-note{margin-top:9px;font-size:10.5px;color:#A39C92;line-height:1.45}
+
+  /* ── 백업 · 복원 ── */
+  .sub-h{font-size:11.5px;font-weight:800;color:var(--sub);margin:14px 0 6px}
+  .bk-area{width:100%;min-height:92px;border:1px solid #E9DFD2;border-radius:12px;padding:10px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;line-height:1.45;background:#fff;color:#5F5A53;resize:vertical}
+  .bk-area:focus{outline:none;border-color:#D9B7A8}
+  .bk-actions{display:flex;gap:7px;margin-top:7px}
+  .bk-actions button{flex:1;height:38px;border-radius:11px;background:#F5F1EB;border:1px solid #E9E0D4;font-size:12.5px;font-weight:800;color:#5F5A53}
+  .bk-actions button:active{background:#EFE8DD}
+  .bk-actions button.pri{background:var(--indigo);border-color:var(--indigo);color:#fff}
+  .bk-actions button.warn{background:#FBEDE9;border-color:#F3D3CA;color:#C0462F}
   .item.flash{background:#FFF8F4;border-color:#F0C4B5;box-shadow:0 0 0 2px rgba(224,91,69,.18), var(--shadow)}
 
   /* ── recommendations ── */
@@ -580,6 +628,35 @@
 
   <section id="view-money" class="hidden">
     <div class="section" style="padding-bottom:0">
+      <div class="section-head"><h2>환율 계산기</h2><span id="fxRateLabel">100엔 = 844.8원</span></div>
+    </div>
+    <div style="padding:0 16px">
+      <div class="panel">
+        <div class="fx-row">
+          <div class="fx-field">
+            <label>엔화 JPY</label>
+            <div class="fx-input"><span>¥</span><input id="fxJpy" type="text" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="엔화 금액"></div>
+          </div>
+          <div class="fx-field">
+            <label>원화 KRW</label>
+            <div class="fx-input"><span>₩</span><input id="fxKrw" type="text" inputmode="decimal" autocomplete="off" placeholder="0" aria-label="원화 금액"></div>
+          </div>
+        </div>
+        <div class="fx-rate">
+          <span>100엔 =</span><input id="fxRate" type="text" inputmode="decimal" value="844.8" aria-label="100엔당 원화 환율"><span>원</span>
+          <button id="fxReset">기준 환율</button>
+        </div>
+        <div class="fx-presets" id="fxPresets">
+          <button data-fx="500">¥500</button>
+          <button data-fx="1000">¥1,000</button>
+          <button data-fx="2000">¥2,000</button>
+          <button data-fx="5000">¥5,000</button>
+          <button data-fx="10000">¥10,000</button>
+        </div>
+        <p class="fx-note">한국수출입은행 매매기준율 · 2026.11.26 기준 100엔 = 844.8원.<br>환율은 직접 고칠 수 있고, 현찰로 바꿀 땐 수수료가 붙어요.</p>
+      </div>
+    </div>
+    <div class="section" style="padding-bottom:0">
       <div class="section-head"><h2>여행 메모</h2></div>
     </div>
     <div style="padding:0 16px">
@@ -664,6 +741,7 @@
   "use strict";
 
   const STORE_KEY = "oktrip.v1";
+  const FX_DEFAULT = 844.8;   // 100엔당 원화 (2026-11-26 매매기준율)
   const TRIP_START = new Date(2026, 11, 13); // 2026-12-13
   const TRIP_END   = new Date(2026, 11, 17); // 2026-12-17
 
@@ -687,7 +765,7 @@
     "京うな和 本店 四条堺町": [35.00428, 135.76356],
     "八坂神社 京都": [35.00366, 135.77855],
     "八代目儀兵衛 祇園": [35.00412, 135.77719],
-    "アパートメントホテル 日本橋 大阪": [34.65975, 135.50604],
+    "アパートメントホテル 11 黒門8": [34.66123, 135.50661],
     "道頓堀リバークルーズ": [34.66914, 135.50271],
     "黒門市場 大阪": [34.66535, 135.50624],
     "やきとり 難波 大阪": [34.66708, 135.49892],
@@ -781,45 +859,45 @@
     // ── 2일차 ──
     {day:"d2", time:"09:30", type:"stay", title:"숙소 체크아웃", place:"鈴 花屋町 朝霧", note:"체크아웃 10:00 · 짐은 프런트에 맡기고 가볍게 출발", map:"鈴 花屋町 朝霧 京都"},
     {day:"d2", time:"10:00", type:"spot", title:"기온거리 · 야사카신사", place:"祇園 · 八坂神社", note:"니넨자카·산넨자카 골목까지 천천히 걸어보기", map:"八坂神社 京都"},
-    {day:"d2", time:"12:00", type:"food", title:"점심 밥집 · 하치다이메 기헤에", place:"八代目儀兵衛 祇園", note:"솥밥 리필 무제한 · 점심 11:00~14:30 (월요일 8:00~15:00)", map:"八代目儀兵衛 祇園"},
-    {day:"d2", time:"14:00", type:"stay", title:"오사카 이동 · 짐 찾고 숙소 체크인", place:"아파트먼트호텔 (니혼바시)", note:"교토→오사카 약 40분 · 짐 회수 후 체크인. 예약한 호텔 주소는 장소 탭에 적어두세요", map:"アパートメントホテル 日本橋 大阪"},
-    {day:"d2", time:"16:30", type:"spot", title:"도톤보리 리버크루즈", place:"道頓堀リバークルーズ", note:"약 20분 코스 · 성인 1,500엔 · 돈돈야 앞 승선장", map:"道頓堀リバークルーズ"},
+    {day:"d2", time:"12:00", type:"food", title:"점심 밥집 · 하치다이메 기헤에", place:"八代目儀兵衛 祇園", note:"솥밥 리필 무제한 · 점심 11:00~14:30(L.O.) · 아침 8:00~10:00 · 정기휴무 없음", map:"八代目儀兵衛 祇園"},
+    {day:"d2", time:"14:00", type:"stay", title:"오사카 이동 · 짐 맡기고 숙소", place:"아파트먼트호텔 11 쿠로몬8", note:"교토→오사카 약 40분 · 체크인은 16:00부터(셀프 체크인 · 액세스 코드는 예약 후 안내) · 14시엔 짐만 맡기기", map:"アパートメントホテル 11 黒門8"},
+    {day:"d2", time:"16:30", type:"spot", title:"도톤보리 리버크루즈", place:"道頓堀リバークルーズ", note:"약 20분 코스 · 성인 2,000엔 · 太左衛門橋 승선장(돈키호테 앞)", map:"道頓堀リバークルーズ"},
     {day:"d2", time:"17:30", type:"shop", title:"구로몬시장 구경", place:"黒門市場", note:"니혼바시역 10번 출구 · 18시 전후 마감이라 간식은 서둘러", map:"黒門市場 大阪"},
     {day:"d2", time:"19:00", type:"food", title:"저녁 야키토리", place:"난바 야키토리 (현장 선택)", note:"줄 서는 집이 많아요. 후보 2곳 찜해두고 가기", map:"やきとり 難波 大阪"},
     {day:"d2", time:"20:30", type:"shop", title:"신사이바시 상점가 구경", place:"心斎橋筋商店街", note:"약 600m 아케이드 · 드럭스토어 쇼핑하기 좋아요", map:"心斎橋筋商店街"},
     {day:"d2", time:"21:30", type:"spot", title:"난바까지 걸으며 일루미네이션", place:"御堂筋 イルミネーション", note:"미도스지 가로수 조명 · 신사이바시→난바 도보 15분", map:"御堂筋 イルミネーション 大阪"},
-    {day:"d2", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 (니혼바시)", note:"", map:"アパートメントホテル 日本橋 大阪"},
+    {day:"d2", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 11 쿠로몬8", note:"도톤보리에서 도보 10분 · 恵美須町역 5분", map:"アパートメントホテル 11 黒門8"},
 
     // ── 3일차 ──
-    {day:"d3", time:"11:00", type:"food", title:"점심 카레 · 하시모토야", place:"橋本屋 (南船場)", note:"11:30~14:00 영업 · 정리권 받고 지정 시간에 입장 · 일요일 휴무", map:"橋本屋 南船場 大阪"},
+    {day:"d3", time:"11:00", type:"food", title:"점심 카레 · 하시모토야", place:"橋本屋 (南船場)", note:"11:45~13:30 영업 · 정리권 10:05경부터(주문·결제 먼저) · 금~일·공휴일 휴무", map:"橋本屋 南船場 大阪"},
     {day:"d3", time:"13:00", type:"spot", title:"덴노지 이동 · 구경", place:"天王寺 · 新世界", note:"쓰텐카쿠와 신세카이 골목 산책", map:"天王寺 大阪"},
     {day:"d3", time:"16:30", type:"spot", title:"하루카스 300 야경", place:"あべのハルカス300", note:"16F 전망대 · 해 지기 30분 전에 올라가면 노을+야경을 같이", map:"あべのハルカス300"},
     {day:"d3", time:"18:30", type:"spot", title:"덴노지공원 크리스마스마켓", place:"天王寺公園 (てんしば)", note:"12월 한정 마켓 · 따뜻한 음료 한 잔", map:"天王寺公園 クリスマスマーケット"},
     {day:"d3", time:"20:00", type:"food", title:"저녁 오마카세 · 스시히로", place:"鮨ひろ 本店", note:"동물원앞역 도보 3분 · 수요일 휴무 · 오마카세 10관 3,630엔~", map:"鮨ひろ 本店 大阪"},
-    {day:"d3", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 (니혼바시)", note:"", map:"アパートメントホテル 日本橋 大阪"},
+    {day:"d3", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 11 쿠로몬8", note:"신세카이에서 지하철 2정거장(동물원앞→恵美須町)", map:"アパートメントホテル 11 黒門8"},
 
     // ── 4일차 ──
-    {day:"d4", time:"10:00", type:"spot", title:"오사카성 구경", place:"大阪城公園 · 天守閣", note:"천수각 9:00~17:00 · 입장 600엔 · 성벽 산책로도 좋아요", map:"大阪城 天守閣"},
+    {day:"d4", time:"10:00", type:"spot", title:"오사카성 구경", place:"大阪城公園 · 天守閣", note:"천수각 9:00~18:00(입관 17:30) · 1,200엔 · 12/28~1/1 휴관 · 성벽 산책로도 좋아요", map:"大阪城 天守閣"},
     {day:"d4", time:"12:30", type:"food", title:"점심 돈카츠 · 돈카츠 아몬", place:"豚かつ あもん (京橋)", note:"오사카성에서 도보 15분 · 화요일 휴무 · 로스카츠 1,800엔", map:"豚かつ あもん 京橋"},
     {day:"d4", time:"14:30", type:"move", title:"우메다 이동 · 구경", place:"梅田", note:"백화점·상점가 · 시간 남으면 루쿠아 전망", map:"梅田 大阪"},
     {day:"d4", time:"18:00", type:"food", title:"저녁 야키니쿠 · 고리쨩", place:"焼肉ごりちゃん 梅田本店", note:"17:00~새벽 영업 · 20세 미만 입장 불가 · 예약 추천", map:"焼肉ごりちゃん 梅田本店"},
     {day:"d4", time:"20:30", type:"spot", title:"일루미네이션 구경", place:"大阪光のルネサンス (나카노시마)", note:"우메다에서 도보권 · 12월 개최", map:"大阪光のルネサンス 中之島"},
-    {day:"d4", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 (니혼바시)", note:"", map:"アパートメントホテル 日本橋 大阪"},
+    {day:"d4", time:"22:00", type:"stay", title:"숙소 복귀", place:"아파트먼트호텔 11 쿠로몬8", note:"나카노시마→난바역 3정거장, 숙소까지 도보 10분", map:"アパートメントホテル 11 黒門8"},
 
     // ── 5일차 ──
-    {day:"d5", time:"10:00", type:"stay", title:"숙소 체크아웃", place:"아파트먼트호텔 (니혼바시)", note:"체크아웃 10:00 · 짐은 프런트에 보관하고 점심", map:"アパートメントホテル 日本橋 大阪"},
+    {day:"d5", time:"10:00", type:"stay", title:"숙소 체크아웃", place:"아파트먼트호텔 11 쿠로몬8", note:"체크아웃 10:00(호텔 기준) · 짐 보관 가능 · 恵美須町역 5분", map:"アパートメントホテル 11 黒門8"},
     {day:"d5", time:"11:30", type:"food", title:"점심 돈카츠 에페", place:"epais (北新地)", note:"11:00~15:00 · 브랜드돈 런치 1,100엔~ · 일·공휴일 휴무", map:"epais 北新地 とんかつ"},
     {day:"d5", time:"13:30", type:"move", title:"간사이공항 이동", place:"関西国際空港", note:"난카이 라피트 약 38분 · 출발 2시간 전 도착 권장", map:"関西国際空港"}
   ];
 
   const PLACES = [
     {g:"stay", ko:"교토 숙소 · 린 하나야초 아사기리", ja:"鈴 花屋町 朝霧", area:"쿄토 시모교구 후타리시초 6-4 · JR 단바구치역 도보 15분", note:"1·2일차 1박 (12.13~14) · 체크인 16:00 / 체크아웃 10:00", map:"鈴 花屋町 朝霧 京都"},
-    {g:"stay", ko:"오사카 숙소 · 아파트먼트호텔", ja:"日本橋 アパートメントホテル", area:"오사카 나니와구 니혼바시 4-8-10 일대 · 니혼바시역 도보 5분", note:"2~4일차 3박 (12.14~17) · 울트라위스키/울트라마켓 건물 근처. 예약한 호텔 이름·주소를 지도 검색어에 넣어두세요", map:"アパートメントホテル 日本橋 大阪"},
+    {g:"stay", ko:"오사카 숙소 · 아파트먼트호텔 11 쿠로몬8", ja:"Apartment Hotel 11 黒門8", area:"오사카 나니와구 니혼바시 3-3-14 · 恵美須町역 도보 5분 / 난바역 도보 8분", note:"2~4일차 3박 (12.14~17) · 체크인 16:00~ / 체크아웃 10:00 · 셀프 체크인(액세스 코드) · 주방·세탁기 포함", map:"アパートメントホテル 11 黒門8"},
 
     {g:"eat", ko:"무기토 멘스케 (라멘)", ja:"麦と麺助", area:"오사카 기타구 도요사키 3-4-12 · 나카쓰역 도보 3분", note:"1일차 점심 · 화요일 휴무 · 일요일 11:00~16:00", map:"麦と麺助 大阪"},
     {g:"eat", ko:"쿄우 우나와 본점 (장어)", ja:"京うな和 本店 四条堺町", area:"쿄토 나카교구 사카이마치도리 시조 上ル 八百屋町 553-2", note:"1일차 저녁 · 니시키시장에서 도보 3분 · 11:00~20:30", map:"京うな和 本店 四条堺町"},
     {g:"eat", ko:"하치다이메 기헤에 (쌀밥 정식)", ja:"八代目儀兵衛 祇園", area:"쿄토 히가시야마구 기온마치키타가와 296 · 야사카신사 앞", note:"2일차 점심 · 솥밥 리필 무제한 · 11:00~14:30", map:"八代目儀兵衛 祇園"},
-    {g:"eat", ko:"하시모토야 (스파이스 카레)", ja:"橋本屋", area:"오사카 주오구 미나미센바 2-2-21-101 · 나가호리바시역 도보 3분", note:"3일차 점심 · 11:30~14:00 · 정리권 필요 · 일요일 휴무", map:"橋本屋 南船場 大阪"},
+    {g:"eat", ko:"하시모토야 (스파이스 카레)", ja:"橋本屋", area:"오사카 주오구 미나미센바 2-2-21-101 · 나가호리바시역 도보 3분", note:"3일차 점심 · 11:45~13:30 · 정리권 10:05경부터 · 금~일·공휴일 휴무", map:"橋本屋 南船場 大阪"},
     {g:"eat", ko:"스시히로 본점 (오마카세)", ja:"鮨ひろ", area:"오사카 나니와구 에비스니시 3-2-6 · 동물원앞역 도보 3분", note:"3일차 저녁 · 수요일 휴무 · 오마카세 10관 3,630엔~", map:"鮨ひろ 本店 大阪"},
     {g:"eat", ko:"돈카츠 아몬", ja:"豚かつ あもん", area:"오사카 미야코지마구 가타마치 2-11-20 · 쿄바시역 도보 1분", note:"4일차 점심 · 화요일 휴무 · 11:00~14:30", map:"豚かつ あもん 京橋"},
     {g:"eat", ko:"야키니쿠 고리쨩 우메다본점", ja:"焼肉ごりちゃん 梅田本店", area:"오사카 기타구 도야마초 8-21 이시모토빌 B1F", note:"4일차 저녁 · 17:00~새벽 · 20세 미만 입장 불가", map:"焼肉ごりちゃん 梅田本店"},
@@ -829,15 +907,57 @@
     {g:"see", ko:"니시키시장", ja:"錦市場", area:"쿄토 나카교구 니시키코지", note:"1일차 · 대부분 18시 전후 마감", map:"錦市場 京都"},
     {g:"see", ko:"카모강", ja:"鴨川", area:"산조대교~시조대교 강변", note:"1일차 · 해 질 무렵 산책", map:"鴨川 三条大橋 京都"},
     {g:"see", ko:"야사카신사 · 기온", ja:"八坂神社", area:"쿄토 히가시야마구 기온마치키타가와 625", note:"2일차 · 24시간 개방", map:"八坂神社 京都"},
-    {g:"see", ko:"도톤보리 리버크루즈", ja:"道頓堀リバークルーズ", area:"도톤보리 강 · 돈돈야 앞 승선장", note:"2일차 · 약 20분 · 성인 1,500엔", map:"道頓堀リバークルーズ"},
+    {g:"see", ko:"도톤보리 리버크루즈", ja:"道頓堀リバークルーズ", area:"도톤보리 강 · 太左衛門橋船着場 (돈키호테 도톤보리점 앞)", note:"2일차 · 약 20분 · 성인 2,000엔", map:"道頓堀リバークルーズ"},
     {g:"see", ko:"구로몬시장", ja:"黒門市場", area:"오사카 주오구 니혼바시 1·2초메", note:"2일차 · 니혼바시역 10번 출구", map:"黒門市場 大阪"},
     {g:"see", ko:"신사이바시 상점가", ja:"心斎橋筋商店街", area:"신사이바시~난바 아케이드", note:"2일차 · 약 600m", map:"心斎橋筋商店街"},
     {g:"see", ko:"하루카스 300", ja:"あべのハルカス300", area:"오사카 아베노구 아베노스지 1-1-43", note:"3일차 · 16F 전망대 · 야경 명소", map:"あべのハルカス300"},
     {g:"see", ko:"덴노지공원 크리스마스마켓", ja:"天王寺公園 (てんしば)", area:"오사카 덴노지구 차우스야마초 5-55", note:"3일차 · 12월 한정 마켓", map:"天王寺公園 クリスマスマーケット"},
-    {g:"see", ko:"오사카성", ja:"大阪城天守閣", area:"오사카 주오구 오사카조 1-1", note:"4일차 · 9:00~17:00 · 입장 600엔", map:"大阪城 天守閣"},
+    {g:"see", ko:"오사카성", ja:"大阪城天守閣", area:"오사카 주오구 오사카조 1-1", note:"4일차 · 9:00~18:00 · 입장 1,200엔 · 12/28~1/1 휴관", map:"大阪城 天守閣"},
     {g:"see", ko:"우메다 · 나카노시마", ja:"梅田 · 中之島", area:"오사카 기타구", note:"4일차 · 일루미네이션 (오사카 광의 르네상스)", map:"大阪光のルネサンス 中之島"},
     {g:"see", ko:"간사이국제공항", ja:"関西国際空港", area:"오사카 이즈미사노", note:"5일차 · 난카이 라피트 약 38분", map:"関西国際空港"}
   ];
+
+  /* ── 영업시간·정기휴무 (공개 정보를 2026-11-27에 확인 · wk: 일~토, null=휴무) ── */
+  const HOURS = {
+    "麦と麺助 大阪": {txt:"평일 11:00–15:30 · 일 11:00–16:00", hol:"화요일 휴무",
+      wk:{0:["11:00","16:00"],1:["11:00","15:30"],2:null,3:["11:00","15:30"],4:["11:00","15:30"],5:["11:00","15:30"],6:["11:00","16:00"]}},
+    "京うな和 本店 四条堺町": {txt:"11:00–20:30 (L.O. 20:00)", hol:"연중무휴",
+      wk:{0:["11:00","20:00"],1:["11:00","20:00"],2:["11:00","20:00"],3:["11:00","20:00"],4:["11:00","20:00"],5:["11:00","20:00"],6:["11:00","20:00"]}},
+    "錦市場 京都": {txt:"매장별 상이 · 대개 10:00–18:00", hol:"수·일 휴무 매장 많음", vary:true,
+      wk:{0:["10:00","18:00"],1:["10:00","18:00"],2:["10:00","18:00"],3:["10:00","18:00"],4:["10:00","18:00"],5:["10:00","18:00"],6:["10:00","18:00"]}},
+    "鴨川 三条大橋 京都": {txt:"상시 개방", hol:"",
+      wk:{0:["00:00","24:00"],1:["00:00","24:00"],2:["00:00","24:00"],3:["00:00","24:00"],4:["00:00","24:00"],5:["00:00","24:00"],6:["00:00","24:00"]}},
+    "八坂神社 京都": {txt:"24시간 참배 가능", hol:"연중무휴",
+      wk:{0:["00:00","24:00"],1:["00:00","24:00"],2:["00:00","24:00"],3:["00:00","24:00"],4:["00:00","24:00"],5:["00:00","24:00"],6:["00:00","24:00"]}},
+    "八代目儀兵衛 祇園": {txt:"점심 11:00–14:30 · 아침 8:00–10:00", hol:"정기휴무 없음 (2·6월 휴관)",
+      wk:{0:["11:00","14:30","17:00","19:00"],1:["11:00","14:30"],2:["11:00","14:30"],3:["11:00","14:30"],4:["11:00","14:30"],5:["11:00","14:30","17:00","19:00"],6:["11:00","14:30","17:00","19:00"]}},
+    "道頓堀リバークルーズ": {txt:"11:00–21:00 · 30분마다 출항", hol:"연중무휴 (7/13·24·25 운항)",
+      wk:{0:["11:00","21:00"],1:["11:00","21:00"],2:["11:00","21:00"],3:["11:00","21:00"],4:["11:00","21:00"],5:["11:00","21:00"],6:["11:00","21:00"]}},
+    "黒門市場 大阪": {txt:"매장별 상이 · 대개 9:00–18:00", hol:"일·공휴일 휴무 매장 있음", vary:true,
+      wk:{0:["09:00","18:00"],1:["09:00","18:00"],2:["09:00","18:00"],3:["09:00","18:00"],4:["09:00","18:00"],5:["09:00","18:00"],6:["09:00","18:00"]}},
+    "心斎橋筋商店街": {txt:"매장별 상이 · 대개 10:00–20:00", hol:"연중무휴", vary:true,
+      wk:{0:["10:00","20:00"],1:["10:00","20:00"],2:["10:00","20:00"],3:["10:00","20:00"],4:["10:00","20:00"],5:["10:00","20:00"],6:["10:00","20:00"]}},
+    "御堂筋 イルミネーション 大阪": {txt:"17:00–25:00 (2026.11.3–12.31)", hol:"기간 한정 점등",
+      wk:{0:["17:00","24:00"],1:["17:00","24:00"],2:["17:00","24:00"],3:["17:00","24:00"],4:["17:00","24:00"],5:["17:00","24:00"],6:["17:00","24:00"]}},
+    "橋本屋 南船場 大阪": {txt:"11:45–13:30 (정리권 10:05경~)", hol:"금·토·일·공휴일 휴무",
+      wk:{0:null,1:["11:45","13:30"],2:["11:45","13:30"],3:["11:45","13:30"],4:["11:45","13:30"],5:null,6:null}},
+    "あべのハルカス300": {txt:"9:00–22:00 (최종 입장 21:30)", hol:"연중무휴",
+      wk:{0:["09:00","21:30"],1:["09:00","21:30"],2:["09:00","21:30"],3:["09:00","21:30"],4:["09:00","21:30"],5:["09:00","21:30"],6:["09:00","21:30"]}},
+    "天王寺公園 クリスマスマーケット": {txt:"11:00–21:00 (12/19~ 21:30)", hol:"2026.11.20–12.25 한정 · 입장 무료",
+      wk:{0:["11:00","21:00"],1:["11:00","21:00"],2:["11:00","21:00"],3:["11:00","21:00"],4:["11:00","21:00"],5:["11:00","21:00"],6:["11:00","21:00"]}},
+    "鮨ひろ 本店 大阪": {txt:"11:00–21:00 (L.O. 20:30)", hol:"수요일 휴무",
+      wk:{0:["11:00","20:30"],1:["11:00","20:30"],2:["11:00","20:30"],3:null,4:["11:00","20:30"],5:["11:00","20:30"],6:["11:00","20:30"]}},
+    "大阪城 天守閣": {txt:"9:00–18:00 (입관 17:30까지)", hol:"12/28–1/1 휴관",
+      wk:{0:["09:00","17:30"],1:["09:00","17:30"],2:["09:00","17:30"],3:["09:00","17:30"],4:["09:00","17:30"],5:["09:00","17:30"],6:["09:00","17:30"]}},
+    "豚かつ あもん 京橋": {txt:"11:00–14:30 (L.O. 14:00) / 18:00–21:30", hol:"화요일 휴무",
+      wk:{0:["11:00","14:00","18:00","21:00"],1:["11:00","14:00","18:00","21:00"],2:null,3:["11:00","14:00","18:00","21:00"],4:["11:00","14:00","18:00","21:00"],5:["11:00","14:00","18:00","21:00"],6:["11:00","14:00","18:00","21:00"]}},
+    "焼肉ごりちゃん 梅田本店": {txt:"17:00–翌 7:00 (L.O. 翌 6:00)", hol:"부정휴 · 20세 미만 입장 불가",
+      wk:{0:["17:00","24:00"],1:["17:00","24:00"],2:["17:00","24:00"],3:["17:00","24:00"],4:["17:00","24:00"],5:["17:00","24:00"],6:["17:00","24:00"]}},
+    "大阪光のルネサンス 中之島": {txt:"17:00–25:00 · 프로젝션 17:30–21:30", hol:"2026.12.11–12.25 (조명은 11.3–12.31)",
+      wk:{0:["17:00","24:00"],1:["17:00","24:00"],2:["17:00","24:00"],3:["17:00","24:00"],4:["17:00","24:00"],5:["17:00","24:00"],6:["17:00","24:00"]}},
+    "epais 北新地 とんかつ": {txt:"11:00–15:00 (L.O. 14:00) / 18:00–21:00", hol:"일·공휴일 휴무 · 12/31–1/3 휴무",
+      wk:{0:null,1:["11:00","14:00","18:00","20:00"],2:["11:00","14:00","18:00","20:00"],3:["11:00","14:00","18:00","20:00"],4:["11:00","14:00","18:00","20:00"],5:["11:00","14:00","18:00","20:00"],6:["11:00","14:00"]}}
+  };
 
   const DEFAULT_CHECK = [
     {group:"depart", text:"여권 (유효기간 6개월 이상)"},
@@ -868,6 +988,61 @@
   const mapUrl = q => "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(q);
   const fmtNum = n => Number(n).toLocaleString("ko-KR");
 
+  /* ── 영업시간 배지 ── */
+  const toMin = t => { const m = /^(\d{1,2}):(\d{2})$/.exec(String(t || "").trim()); return m ? (+m[1]) * 60 + (+m[2]) : null; };
+
+  function weekdayOf(dayId){
+    const d = DAYS.find(x => x.id === dayId);
+    return d ? new Date(2026, 11, 13 + d.n - 1).getDay() : null;
+  }
+
+  function hoursOf(it){
+    if (!it) return null;
+    const key = it.map || it.place;
+    return (key && HOURS[key]) || null;
+  }
+
+  // 계획한 날짜·시간 기준으로 영업 중인지 판단
+  function hoursStatus(h, wd, time){
+    if (!h || !h.wk || wd == null) return null;
+    const r = h.wk[wd];
+    if (r === null) return {cls: "no", label: "정기휴무"};
+    const t = toMin(time);
+    if (!r || !r.length || t == null) return null;
+    for (let i = 0; i < r.length; i += 2){
+      const open = toMin(r[i]), close = toMin(r[i + 1]);
+      if (t >= open && t < close){
+        if (close - t <= 45) return {cls: "soon", label: "곧 마감", extra: r[i + 1]};
+        return {cls: "ok", label: "영업 중"};
+      }
+      if (t < open) return i === 0
+        ? {cls: "soon", label: "개점 전", extra: r[0]}
+        : {cls: "soon", label: "브레이크 타임"};
+    }
+    return {cls: "no", label: "영업 종료", extra: r[r.length - 1]};
+  }
+
+  // 일정 카드용: 계획한 날짜·시간으로 상태까지 계산
+  function hoursChips(it){
+    const h = hoursOf(it);
+    if (!h) return "";
+    const st = it && it.day ? hoursStatus(h, weekdayOf(it.day), it.time) : null;
+    return '<div class="hr-line">'
+      + '<span class="hrs hr-txt">' + esc(h.txt) + '</span>'
+      + (st ? '<span class="hrs ' + st.cls + '">' + esc(st.label + (st.extra ? " " + st.extra : "")) + '</span>' : '')
+      + (h.hol ? '<span class="hrs hr-hol">' + esc(h.hol) + '</span>' : '')
+      + '</div>';
+  }
+
+  // 장소 탭용: 날짜가 없으니 시간·휴무만
+  function hoursChipsPlain(h){
+    if (!h) return "";
+    return '<div class="hr-line">'
+      + '<span class="hrs hr-txt">' + esc(h.txt) + '</span>'
+      + (h.hol ? '<span class="hrs hr-hol">' + esc(h.hol) + '</span>' : '')
+      + '</div>';
+  }
+
   function save(){
     try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){}
   }
@@ -879,7 +1054,8 @@
       check: DEFAULT_CHECK.map(c => ({id:uid(), done:false, ...c})),
       checkGroups: [{id:"depart", name:GROUPS.depart}, {id:"pack", name:GROUPS.pack}],
       expenses: [],
-      memo: ""
+      memo: "",
+      fxRate: FX_DEFAULT
     };
   }
 
@@ -897,7 +1073,8 @@
             check: p.check,
             checkGroups: Array.isArray(p.checkGroups) && p.checkGroups.length ? p.checkGroups : d.checkGroups,
             expenses: Array.isArray(p.expenses) ? p.expenses : [],
-            memo: typeof p.memo === "string" ? p.memo : ""
+            memo: typeof p.memo === "string" ? p.memo : "",
+            fxRate: Number(p.fxRate) > 0 ? Number(p.fxRate) : FX_DEFAULT
           };
         }
       } catch(e){}
@@ -985,6 +1162,7 @@
             + '<h3 class="title">' + esc(it.title) + '</h3>'
             + (it.place ? '<p class="place">' + esc(it.place) + '</p>' : '')
             + (it.note ? '<p class="note">' + esc(it.note) + '</p>' : '')
+            + hoursChips(it)
             + (mapQ ? '<a class="mapbtn" href="' + mapUrl(mapQ) + '" target="_blank" rel="noopener noreferrer">'
                 + '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6.4-6.3 6.4-11A6.4 6.4 0 0 0 5.6 10c0 4.7 6.4 11 6.4 11z"/><circle cx="12" cy="9.9" r="2"/></svg>'
                 + '지도</a>' : '')
@@ -1156,6 +1334,7 @@
   const PI_CHEV_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 6l-6 6 6 6"/></svg>';
   const PI_CHEV_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 6l6 6-6 6"/></svg>';
   const PI_PIN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6.4-6.3 6.4-11A6.4 6.4 0 0 0 5.6 10c0 4.7 6.4 11 6.4 11z"/><circle cx="12" cy="9.9" r="2"/></svg>';
+  const PI_TRANSIT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="3.4" width="14" height="13.2" rx="3"/><path d="M5 11h14M8.6 20l1.6-3.4M15.4 20l-1.6-3.4"/><circle cx="9" cy="13.6" r=".9"/><circle cx="15" cy="13.6" r=".9"/></svg>';
 
   // 일정 항목 → 장소 탭 정보(일본어 이름·주소) 찾기
   function placeInfoOf(it){
@@ -1189,6 +1368,13 @@
       ? '<ul class="pi-items">' + stop.items.map(it => '<li>'
           + '<span>' + (it.time ? esc(it.time) : "·") + '</span>' + esc(it.title) + '</li>').join("") + '</ul>'
       : "";
+    // 이전 핀 → 이 핀 대중교통 길찾기 (첫 핀은 숨김)
+    const prev = i > 0 ? pinView[i - 1] : null;
+    const prevTitle = prev ? (prev.items[0].title || prev.items[0].place || "이전 장소") : "";
+    const dirHref = prev
+      ? "https://www.google.com/maps/dir/?api=1&origin=" + prev.ll[0] + "," + prev.ll[1]
+        + "&destination=" + stop.ll[0] + "," + stop.ll[1] + "&travelmode=transit"
+      : "";
     return '<div class="pi-grab"></div>'
       + '<div class="pi-head">'
         + '<span class="pi-num' + cls + '">' + (i + 1) + '</span>'
@@ -1204,7 +1390,10 @@
         + '<span class="pi-day">' + day.n + '일차 · ' + day.date + ' (' + day.wd + ')</span>'
       + '</div>'
       + (head.note ? '<p class="pi-note">' + esc(head.note) + '</p>' : '')
+      + hoursChips(head)
       + more
+      + (prev ? '<a class="pi-dir" href="' + dirHref + '" target="_blank" rel="noopener noreferrer">'
+          + PI_TRANSIT + '<span>' + esc(prevTitle) + ' → 여기</span><small>대중교통</small></a>' : '')
       + '<div class="pi-actions">'
         + '<button class="pi-nav" data-pi="prev" aria-label="이전 장소"' + (i === 0 ? ' disabled' : '') + '>' + PI_CHEV_L + '</button>'
         + '<a class="pi-map" href="' + gHref + '" target="_blank" rel="noopener noreferrer">' + PI_PIN + '구글맵 열기</a>'
@@ -1415,6 +1604,7 @@
             + '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#B4AEA5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:2px"><path d="M9 6l6 6-6 6"/></svg>'
             + '</div>'
             + (p.note ? '<p class="pnote">' + esc(p.note) + '</p>' : '')
+            + hoursChipsPlain(HOURS[p.map])
             + '</a>'
           ).join("")
         + '</div>';
@@ -1465,6 +1655,112 @@
     ).join("") : '<p class="empty">아직 기록이 없어요.</p>';
 
     if ($("#memoBox").value !== state.memo) $("#memoBox").value = state.memo;
+    fxRender();
+  }
+
+  /* ── 환율 계산기 (JPY ↔ KRW) ── */
+  function fxNow(){
+    const r = Number(state.fxRate);
+    return r > 0 ? r : FX_DEFAULT;
+  }
+
+  const numOf = s => {
+    const n = parseFloat(String(s == null ? "" : s).replace(/[^0-9.]/g, ""));
+    return isFinite(n) ? n : 0;
+  };
+  const comma = n => Number(n).toLocaleString("ko-KR");
+  const rateTxt = r => String(Math.round(r * 100) / 100);
+
+  let fxLast = "jpy", fxTimer = null;
+
+  function fxJpyToKrw(){
+    const jpy = numOf($("#fxJpy").value);
+    $("#fxKrw").value = jpy ? comma(Math.round(jpy * fxNow() / 100)) : "";
+  }
+
+  function fxKrwToJpy(){
+    const krw = numOf($("#fxKrw").value);
+    if (!krw){ $("#fxJpy").value = ""; return; }
+    const jpy = krw * 100 / fxNow();
+    $("#fxJpy").value = comma(jpy >= 100 ? Math.round(jpy) : Math.round(jpy * 10) / 10);
+  }
+
+  function fxRender(){
+    const r = fxNow();
+    const label = $("#fxRateLabel");
+    if (label) label.textContent = "100엔 = " + rateTxt(r) + "원";
+    const box = $("#fxRate");
+    if (box && document.activeElement !== box) box.value = rateTxt(r);
+    if (fxLast === "krw") fxKrwToJpy(); else fxJpyToKrw();
+  }
+
+  /* ── 백업 · 복원 ── */
+  function openBackupSheet(){
+    const json = JSON.stringify(state, null, 1);
+    openSheet(
+      '<h2>백업 · 복원</h2>'
+      + '<p class="sub-h">내보내기 · 지금 데이터</p>'
+      + '<textarea class="bk-area" id="bkOut" readonly>' + esc(json) + '</textarea>'
+      + '<div class="bk-actions"><button data-bk="copy">복사</button><button data-bk="download">파일로 저장</button></div>'
+      + '<p class="sub-h">가져오기 · 백업 JSON</p>'
+      + '<textarea class="bk-area" id="bkIn" placeholder="여기에 백업 JSON을 붙여넣으세요"></textarea>'
+      + '<div class="bk-actions"><button class="pri" data-bk="import">불러오기</button></div>'
+      + '<p class="hint" style="padding:10px 2px 0;text-align:left">불러오면 지금 일정·체크·경비·메모를 전부 덮어써요.</p>'
+    );
+  }
+
+  async function bkCopy(text){
+    try {
+      await navigator.clipboard.writeText(text);
+      toast("복사했어요");
+      return;
+    } catch(e){}
+    const ta = $("#bkOut");
+    if (!ta) return;
+    ta.focus(); ta.select();
+    try { document.execCommand("copy"); toast("복사했어요"); }
+    catch(e){ toast("복사가 안 되면 길게 눌러 복사해 주세요"); }
+  }
+
+  function bkDownload(){
+    const text = $("#bkOut").value;
+    try {
+      const blob = new Blob([text], {type: "application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "oktrip-" + new Date().toISOString().slice(0, 10) + ".json";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 4000);
+      toast("파일로 저장했어요");
+    } catch(e){ toast("저장이 안 돼요. 복사를 써 주세요"); }
+  }
+
+  function bkImport(){
+    const raw = (($("#bkIn") || {}).value || "").trim();
+    if (!raw){ toast("JSON을 붙여넣어 주세요"); return; }
+    let p = null;
+    try { p = JSON.parse(raw); } catch(e){ toast("JSON 형식이 아니에요"); return; }
+    if (!p || !Array.isArray(p.items) || !Array.isArray(p.check)){ toast("백업 파일 형식이 아니에요"); return; }
+    if (!confirm("지금 데이터를 백업 내용으로 덮어쓸까요?")) return;
+    const d = defaults();
+    const fix = x => Object.assign({}, x, {id: x && x.id ? x.id : uid()});
+    state = {
+      v: 1,
+      items: p.items.map(fix),
+      check: p.check.map(fix),
+      checkGroups: Array.isArray(p.checkGroups) && p.checkGroups.length ? p.checkGroups : d.checkGroups,
+      expenses: Array.isArray(p.expenses) ? p.expenses.map(fix) : [],
+      memo: typeof p.memo === "string" ? p.memo : "",
+      fxRate: Number(p.fxRate) > 0 ? Number(p.fxRate) : FX_DEFAULT
+    };
+    save();
+    closeSheet();
+    renderAll();
+    renderHeader();
+    toast("백업을 불러왔어요");
   }
 
   /* ── sheet ── */
@@ -1554,6 +1850,7 @@
     openSheet(
       '<h2>설정</h2>'
       + '<div class="menu-list">'
+      + '<button data-act="backup"><span>백업 · 복원<small>JSON으로 내보내고 다시 불러오기</small></span><span>⇄</span></button>'
       + '<button data-act="resetItems"><span>기본 일정으로 되돌리기<small>일정과 완료 표시를 처음 상태로</small></span><span>↺</span></button>'
       + '<button data-act="resetCheck"><span>체크리스트 초기화<small>체크 표시와 추가한 항목을 지움</small></span><span>↺</span></button>'
       + '<button data-act="clearExp"><span>경비 기록 비우기<small>메모는 그대로 남아요</small></span><span>↺</span></button>'
@@ -1647,6 +1944,7 @@
     const t = ev.target.closest("[data-act]");
     if (!t) return;
     const act = t.dataset.act;
+    if (act === "backup") openBackupSheet();
     if (act === "resetItems"){
       if (confirm("기본 일정으로 되돌릴까요? 추가·수정한 일정은 사라져요.")){
         const fresh = defaults();
@@ -1689,6 +1987,43 @@
   });
 
   $("#btnSettings").addEventListener("click", openSettings);
+
+  // 백업 시트 안 버튼
+  $("#sheet").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-bk]");
+    if (!b) return;
+    const act = b.dataset.bk;
+    if (act === "copy") bkCopy($("#bkOut").value);
+    else if (act === "download") bkDownload();
+    else if (act === "import") bkImport();
+  });
+
+  // 환율 계산기
+  $("#fxJpy").addEventListener("input", () => { fxLast = "jpy"; fxJpyToKrw(); });
+  $("#fxKrw").addEventListener("input", () => { fxLast = "krw"; fxKrwToJpy(); });
+  $("#fxRate").addEventListener("input", () => {
+    const r = numOf($("#fxRate").value);
+    if (!(r > 0)) return;
+    state.fxRate = r;
+    $("#fxRateLabel").textContent = "100엔 = " + rateTxt(r) + "원";
+    if (fxLast === "krw") fxKrwToJpy(); else fxJpyToKrw();
+    clearTimeout(fxTimer);
+    fxTimer = setTimeout(save, 400);
+  });
+  $("#fxReset").addEventListener("click", () => {
+    state.fxRate = FX_DEFAULT;
+    save();
+    fxRender();
+    toast("기준 환율로 되돌렸어요");
+  });
+  $("#fxPresets").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-fx]");
+    if (!b) return;
+    fxLast = "jpy";
+    $("#fxJpy").value = comma(Number(b.dataset.fx));
+    fxJpyToKrw();
+  });
+
   $("#backdrop").addEventListener("click", closeSheet);
   document.addEventListener("keydown", ev => { if (ev.key === "Escape"){ closeSheet(); closePinInfo(); } });
 
