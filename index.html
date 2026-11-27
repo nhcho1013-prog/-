@@ -1068,7 +1068,7 @@
         const p = JSON.parse(raw);
         if (p && Array.isArray(p.items) && Array.isArray(p.check)) {
           const d = defaults();
-          return {
+          const s = {
             v:1,
             items: p.items,
             check: p.check,
@@ -1077,10 +1077,41 @@
             memo: typeof p.memo === "string" ? p.memo : "",
             fxRate: Number(p.fxRate) > 0 ? Number(p.fxRate) : FX_DEFAULT
           };
+          if (fixSavedHotel(s)) { try { localStorage.setItem(STORE_KEY, JSON.stringify(s)); } catch(e){} }
+          return s;
         }
       } catch(e){}
     }
     return defaults();
+  }
+
+  // 예전에 저장된 일정의 오사카 숙소(자리표시자)를 쿠로몬8으로 옮긴다 — 사용자가 고친 다른 값은 그대로 둔다
+  const HOTEL_FIX = {
+    oldMap: "アパートメントホテル 日本橋 大阪",
+    newMap: "アパートメントホテル 11 黒門8",
+    oldPlace: "아파트먼트호텔 (니혼바시)",
+    newPlace: "아파트먼트호텔 11 쿠로몬8",
+    oldLL: [34.65975, 135.50604],
+    newLL: [34.66123, 135.50661]
+  };
+  const HOTEL_NOTE_FIX = {
+    "교토→오사카 약 40분 · 짐 회수 후 체크인. 예약한 호텔 주소는 장소 탭에 적어두세요": "교토→오사카 약 40분 · 체크인은 16:00부터(셀프 체크인 · 액세스 코드는 예약 후 안내) · 14시엔 짐만 맡기기",
+    "체크아웃 10:00 · 짐은 프런트에 보관하고 점심": "체크아웃 10:00(호텔 기준) · 짐 보관 가능 · 恵美須町역 5분"
+  };
+
+  function fixSavedHotel(s){
+    let changed = false;
+    (s.items || []).forEach(it => {
+      if (!it) return;
+      if (it.map === HOTEL_FIX.oldMap){ it.map = HOTEL_FIX.newMap; changed = true; }
+      if (it.place === HOTEL_FIX.oldPlace){ it.place = HOTEL_FIX.newPlace; changed = true; }
+      if (Array.isArray(it.ll) && it.ll[0] === HOTEL_FIX.oldLL[0] && it.ll[1] === HOTEL_FIX.oldLL[1]){
+        it.ll = HOTEL_FIX.newLL.slice();
+        changed = true;
+      }
+      if (it.note && HOTEL_NOTE_FIX[it.note]){ it.note = HOTEL_NOTE_FIX[it.note]; changed = true; }
+    });
+    return changed;
   }
 
   function toast(msg){
